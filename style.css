@@ -45,7 +45,7 @@
   
   /* Hero Section */
   .hero {
-    background: url(img/bg.jpg) center/cover;
+    background: url() center/cover;
     color: white;
     padding: 6rem 2rem;
     text-align: center;
