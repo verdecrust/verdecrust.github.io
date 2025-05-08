@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verde Crust - Fresh, Authentic Veg Pizzas</title>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -11,11 +14,22 @@
     <header>
         <nav>
             <div class="logo">Verde Crust</div>
+            <button id="menu-toggle" class="menu-icon">☰</button>
+
+<!-- Your nav links -->
+<nav id="nav-links" class="nav-links">
+  <a href="#home">Home</a>
+  <a href="#menu">Menu</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+</nav>
             <ul class="nav-links">
-                <li><a href="#">Menu</a></li>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#menu">Menu</a></li>
                 <li><a href="#about">About</a></li> <!-- Added About link -->
-                <li><a href="#">Contact</a></li>
+                <li><a href="#contact">Contact</a></li>
                 <li><a href="#" id="cart-icon"><i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span></a></li>
+                
             </ul>
         </nav>
     </header>
@@ -30,27 +44,76 @@
         <section class="special-pizzas">
             <h2>Our Special Pizzas</h2>
             <div class="pizza-grid">
-                <!-- Farm Fresh Pizza -->
-                <div class="pizza-card">
-                    <div class="image-container">
-                        <img src="assests/pizzaimg2.jpg" alt="Farm Fresh Pizza with vegetables" class="pizza-img">
-                    </div>
-                    <div class="pizza-info">
-                        <h3>Farm Fresh</h3>
-                        <p>Loaded with veggies & cheese</p>
-                        <button class="add-to-cart" data-id="1" data-name="Fresh" data-price="100">Add to Cart</button>
-                    </div>
+              
+              <div class="pizza-card">
+                <div class="image-container">
+                  <img src="assests/pizzaimg.png" alt="Farm Fresh Pizza" />
                 </div>
-        
-                <!-- Cheese Burst Pizza -->
-                <div class="pizza-card">
-                    <div class="image-container">
-                        <img src="assests/pizzaimg.png" alt="Cheese Burst Pizza with melted cheese" class="pizza-img">
-                    </div>
-                    <div class="pizza-info">
-                        <h3>Cheese Burst</h3>
-                        <p>Extra goopy cheesy delight</p>
-                        <button class="add-to-cart" data-id="2" data-name="Farm Fresh" data-price="150">Add to Cart</button>
+                <div class="pizza-info">
+                  <h3>Farm Fresh</h3>
+                  <p>Loaded with veggies & cheese</p>
+                  <button class="add-to-cart" data-id= 1 data-name="Farm Fresh" data-price="250">Add to Cart</button>
+                </div>
+              </div>
+          
+              <div class="pizza-card">
+                <div class="image-container">
+                  <img src="assests/pizzaimg.png" alt="Cheese Burst" />
+                </div>
+                <div class="pizza-info">
+                  <h3>Cheese Burst</h3>
+                  <p>Extra gooey cheesy delight</p>
+                  <button class="add-to-cart" data-id= 2 data-name="Farm Fresh" data-price="250">Add to Cart</button>
+                </div>
+              </div>
+          
+              <div class="pizza-card">
+                <div class="image-container">
+                  <img src="assests/pizzaimg.png" alt="Classic Margherita" />
+                </div>
+                <div class="pizza-info">
+                  <h3>Classic Margherita</h3>
+                  <p>Tomato sauce, fresh basil, and mozzarella</p>
+                  <button class="add-to-cart" data-id= 3 data-name="Farm Fresh" data-price="250">Add to Cart</button>
+                </div>
+              </div>
+          
+              <div class="pizza-card">
+                <div class="image-container">
+                  <img src="assests/pizzaimg.png" alt="Veggie Delight" />
+                </div>
+                <div class="pizza-info">
+                  <h3>Veggie Delight</h3>
+                  <p>Loaded with garden-fresh toppings</p>
+                  <button class="add-to-cart" data-id= 4 data-name="Farm Fresh" data-price="250">Add to Cart</button>
+                </div>
+              </div>
+          
+              <div class="pizza-card">
+                <div class="image-container">
+                  <img src="assests/pizzaimg.png" alt="Spicy Paneer" />
+                </div>
+                <div class="pizza-info">
+                  <h3>Spicy Paneer</h3>
+                  <p>Paneer with a spicy twist</p>
+                  <button class="add-to-cart" data-id= 5 data-name="Farm Fresh" data-price="250">Add to Cart</button>
+                </div>
+              </div>
+          
+              <div class="pizza-card">
+                <div class="image-container">
+                  <img src="assests/pizzaimg.png" alt="Mexican Treat" />
+                </div>
+                <div class="pizza-info">
+                  <h3>Mexican Treat</h3>
+                  <p>Fiery Mexican toppings & herbs</p>
+                  <button class="add-to-cart" data-id= 6 data-name="Farm Fresh" data-price="250">Add to Cart</button>
+                </div>
+              </div>
+          
+            </div>
+          </section>
+          
                     </div>
                 </div>
             </div>
@@ -68,21 +131,7 @@
         </div>
     </div>
 
-    <!-- Checkout Form Modal -->
-    <div id="checkout-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Checkout</h2>
-            <form id="checkout-form">
-                <input type="text" placeholder="Name" required>
-                <input type="email" placeholder="Email" required>
-                <input type="tel" placeholder="Phone" required>
-                <textarea placeholder="Delivery Address" required></textarea>
-                <button type="submit">Place Order</button>
-            </form>
-        </div>
-    </div>
-
+    
     <!-- about section -->
 
     <section id="about" class="about-section">
@@ -93,7 +142,7 @@
                 <p>Founded in 2023, Verde Crust brings you authentic vegetarian pizzas made with fresh, locally-sourced ingredients. Our passion for perfect crusts and innovative veggie toppings has made us a favorite in the community.</p>
                 
                 <div class="about-image">
-                    <img src="img/pizza-kitchen.jpg" alt="Verde Crust kitchen preparing fresh pizzas">
+                    <img src="assests/pizza4.jpg" alt="Verde Crust kitchen preparing fresh pizzas">
                 </div>
             </div>
     
@@ -125,6 +174,193 @@
         </div>
     </section>
 
-    <script src="scripts/main.js"></script>
+    <!-- Add this before </body> -->
+<div id="checkout-modal" class="modal">
+    <div class="modal-content">
+        <!-- HTML -->
+<div class="checkout-container">
+  <h2>Checkout</h2>
+  <div class="input-row">
+    <input type="text" placeholder="Name" required>
+    <input type="email" placeholder="Email" required>
+    <input type="tel" placeholder="Phone" required>
+  </div>
+
+  <div class="order-type">
+    <label><input type="radio" name="orderType" value="pickup"> Pickup at Table</label>
+    <label><input type="radio" name="orderType" value="delivery" checked> Home Delivery (+₹50 delivery charge)</label>
+  </div>
+
+  <textarea id="addressField" placeholder="Delivery Address" required></textarea>
+  <input type="time" id="pickupTime" class="hidden" required>
+
+  <h3>Payment Method</h3>
+  <label><input type="radio" name="payment" value="cod" checked> Cash on Delivery</label>
+  <label><input type="radio" name="payment" value="online"> Online Payment</label>
+
+  <button class="place-order-btn">Place Order</button>
+
+  <div id="onlinePaymentSection" class="hidden">
+    <input type="text" placeholder="Cardholder Name" />
+    <input type="text" placeholder="Card Number" maxlength="16" />
+    <input type="text" placeholder="MM/YY" maxlength="5" />
+    <input type="text" placeholder="CVV" maxlength="3" />
+  </div>
+  
+</div>
+
+<!-- CSS -->
+<style>
+.checkout-container {
+  max-width: 600px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  margin: auto;
+}
+
+.checkout-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.input-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.input-row input {
+  flex: 1;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: -2px;
+}
+
+.order-type {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.order-type label {
+  font-size: 16px;
+}
+
+textarea,
+#pickupTime {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: inherit;
+}
+
+.hidden {
+  display: none;
+}
+
+h3 {
+  margin-bottom: 10px;
+}
+
+label input[type="radio"] {
+  margin-right: 8px;
+}
+
+.place-order-btn {
+  background-color: #28a745;
+  color: white;
+  font-size: 18px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.3s ease;
+}
+
+.place-order-btn:hover {
+  background-color: #218838;
+}
+</style>
+
+<!-- JS -->
+<script>
+const orderRadios = document.querySelectorAll('input[name="orderType"]');
+const addressField = document.getElementById('addressField');
+const pickupTime = document.getElementById('pickupTime');
+
+orderRadios.forEach(radio => {
+  radio.addEventListener('change', () => {
+    if (radio.value === 'delivery') {
+      addressField.classList.remove('hidden');
+      addressField.required = true;
+
+      pickupTime.classList.add('hidden');
+      pickupTime.required = false;
+    } else {
+      pickupTime.classList.remove('hidden');
+      pickupTime.required = true;
+
+      addressField.classList.add('hidden');
+      addressField.required = false;
+    }
+  });
+});
+
+const paymentRadios = document.querySelectorAll('input[name="payment"]');
+const onlinePaymentSection = document.getElementById('onlinePaymentSection');
+
+paymentRadios.forEach(radio => {
+  radio.addEventListener('change', () => {
+    if (radio.value === 'online') {
+      onlinePaymentSection.classList.remove('hidden');
+    } else {
+      onlinePaymentSection.classList.add('hidden');
+    }
+  });
+});
+
+const menuToggle = document.getElementById('menu-toggle');
+  const navLinks = document.getElementById('nav-links');
+  
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('show');
+
+    const cartIcon = document.getElementById('cart-icon'); // your cart icon/button
+const cart = document.getElementById('cart');
+const closeCartBtn = document.getElementById('close-cart'); // close button inside cart
+
+cartIcon.addEventListener('click', () => {
+  cart.classList.add('show');
+});
+
+closeCartBtn.addEventListener('click', () => {
+  cart.classList.remove('show');
+});
+
+  });
+
+</script>
+
+    </div>
+</div>
+
+<script src="scripts/main.js"></script>
+
+
+
+ 
+  
+  
+  
+
+    
 </body>
 </html>

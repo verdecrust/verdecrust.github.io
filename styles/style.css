@@ -10,7 +10,18 @@ body {
     background-color: #f9f9f9;
     color: #333;
     line-height: 1.6;
+    text-align: center;
 }
+#pickup-time {
+    margin-top: 10px;
+    padding: 8px;
+    width: 100%;
+  }
+  
+  
+  
+  
+  
 
 /* Header styles */
 header {
@@ -99,6 +110,7 @@ nav {
     padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    
 }
 
 .pizza-grid {
@@ -107,36 +119,59 @@ nav {
     gap: 2rem;
     margin-top: 1.5rem;
 }
+/* This will maintain your current classes while adjusting the grid layout */
+.pizza-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+}
 
+/* For specific row/column control on larger screens */
+@media (min-width: 992px) {
+    .pizza-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    }
+}
+
+@media (max-width: 768px) {
+    .pizza-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    }
+}
+
+@media (max-width: 480px) {
+    .pizza-grid {
+        grid-template-columns: 1fr; /* 1 column */
+    }
+}
 /* Card Styles */
 .pizza-card {
-    background: white;
+    background-color: white;
     border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-}
-
-.pizza-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-}
-
-/* Image Container */
-.image-container {
+    text-align: center;
+    padding-bottom: 1rem;
+    transition: transform 0.2s ease;
+  }
+  
+  .pizza-card:hover {
+    transform: scale(1.02);
+  }
+  
+  .image-container {
     width: 100%;
-    height: 220px; /* Fixed height for consistency */
-    position: relative;
+    height: 180px; /* Set a fixed height for consistency */
     overflow: hidden;
-}
-
-.pizza-img {
+    border-bottom: 1px solid #eee;
+  }
+  
+  .image-container img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center;
-    transition: transform 0.5s ease;
-}
+    object-fit: cover; /* Makes the image scale and crop nicely */
+  }
+  
 
 .pizza-card:hover .pizza-img {
     transform: scale(1.05);
@@ -225,7 +260,76 @@ nav {
     transform: scale(1.2);
 }
 
+
+/* Hide the mobile icon on desktop */
+.menu-icon {
+    display: none;
+    font-size: 28px;
+    background: none;
+    border: none;
+    color: white;
+  }
+  
+  /* Base cart styles */
+/* Hide cart initially */
+.cart.hidden {
+    display: none;
+  }
+  
+  #cart {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background: white;
+    width: 400px;
+    height: 100vh;
+    padding: 20px;
+    overflow-y: auto;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+    z-index: 1000;
+  }
+  
+  @media (max-width: 768px) {
+    #cart {
+      width: 100%;
+    }
+  }
+  
+  
+  
+
+  /* Mobile nav styles */
+  @media (max-width: 768px) {
+    .menu-icon {
+      display: block;
+    }
+  
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      background: #333;
+      position: absolute;
+      top: 50px;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+  
+    .nav-links a {
+      color: white;
+      padding: 15px;
+      border-bottom: 1px solid #444;
+    }
+  
+    .nav-links.show {
+      display: flex;
+    }
+  }
+  
+
+
 /* Modal styles */
+/* Modal Styles */
 .modal {
     display: none;
     position: fixed;
@@ -238,21 +342,40 @@ nav {
 }
 
 .modal-content {
-    background-color: white;
+    background-color: #ffffff;
     margin: 5% auto;
-    padding: 2rem;
-    border-radius: 8px;
-    width: 80%;
+    padding: 15px;
+    border-radius: 15px;
+    width: 69%;
     max-width: 600px;
     position: relative;
 }
+/* .mymodal-content {
+    background-color: #9a9494;
+    margin: 5% auto;
+    padding: 15px;
+    border-radius: 15px;
+    width: 69%;
+    max-width: 600px;
+    position: relative;
+} */
 
 .close {
     position: absolute;
-    top: 1rem;
-    right: 1.5rem;
-    font-size: 1.5rem;
+    right: 20px;
+    top: 10px;
+    font-size: 28px;
+    font-weight: bold;
     cursor: pointer;
+}
+
+#cart-modal {
+    z-index: 1001;
+}
+
+/* Checkout modal should appear above cart modal */
+#checkout-modal {
+    z-index: 1002;
 }
 
 /* Cart items styles */
@@ -275,47 +398,177 @@ nav {
 }
 
 #checkout-btn {
-    background-color: #2e8b57;
-    color: white;
-    border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-    font-size: 1.1rem;
-    transition: background-color 0.3s;
-}
-
-#checkout-btn:hover {
-    background-color: #3aa76d;
-}
-
-/* Checkout form styles */
-#checkout-form input,
-#checkout-form textarea {
     display: block;
     width: 100%;
-    padding: 0.8rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    margin-top: 20px;
+    padding: 14px;
+    font-size: 18px;
+    background-color: #388e3c;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-weight: 600;
+  }
+  
+  #checkout-btn:hover {
+    background-color: #2e7d32;
+    transform: scale(1.02);
+  }
+  
+  #checkout-btn:active {
+    background-color: #1b5e20;
+    transform: scale(0.98);
+  }
+/* payment gateway */
+  #onlinePaymentSection {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  #onlinePaymentSection input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  
+  /* #delivery-charge {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #444;
+  }
+  
+  #payment-section {
+    margin-top: 20px;
+  }
+  
+  .pay-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #00796b;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .pay-btn:hover {
+    background-color: #004d40;
+  }
+  
+  .hidden {
+    display: none;
+  } */
+  
+/* Checkout Form Styles */
+/* .checkout-section {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-#checkout-form button {
+.checkout-section input,
+.checkout-section textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.delivery-options {
+    margin: 15px 0;
+}
+
+.delivery-options label {
+    display: block;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.payment-options {
+    margin: 15px 0;
+}
+
+.payment-options label {
+    display: block;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.place-order-btn {
     background-color: #2e8b57;
     color: white;
     border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 5px;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 16px;
     cursor: pointer;
     width: 100%;
-    font-size: 1.1rem;
-    transition: background-color 0.3s;
+} */
+
+/* Pickup Checkbox Row */
+.pickup-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  font-size: 16px;
+  color: #333;
 }
 
-#checkout-form button:hover {
-    background-color: #3aa76d;
+/* Time Picker */
+#pickup-time {
+  width: 100%;
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
 }
+
+/* Submit Button */
+#checkout-form button[type="submit"] {
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px;
+  font-size: 18px;
+  background-color: #388e3c;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#checkout-form button[type="submit"]:hover {
+  background-color: #2e7d32;
+}
+
+/* Delivery/Pickup Choice */
+.delivery-choice {
+    display: flex;
+    gap: 20px;
+    margin-top: 16px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .delivery-choice input[type="radio"] {
+    margin-right: 8px;
+    accent-color: #4caf50; /* modern checkbox color */
+  }
+  
+  /* Hide element class */
+  .hidden {
+    display: none;
+  }
 
 /* Responsive styles */
 @media (max-width: 768px) {
@@ -444,3 +697,6 @@ html {
 section[id] {
     scroll-margin-top: 80px; /* Match your header height */
 }
+
+
+

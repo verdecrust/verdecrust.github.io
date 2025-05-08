@@ -15,6 +15,7 @@ const closeButtons = document.querySelectorAll('.close');
 const addToCartButtons = document.querySelectorAll('.add-to-cart');
 const checkoutForm = document.getElementById('checkout-form');
 
+
 // Open cart modal
 cartIcon.addEventListener('click', (e) => {
     e.preventDefault();
@@ -29,6 +30,8 @@ closeButtons.forEach(button => {
         checkoutModal.style.display = 'none';
     });
 });
+
+
 
 // Close modals when clicking outside
 window.addEventListener('click', (e) => {
@@ -88,11 +91,12 @@ function showAddToCartFeedback(button) {
 
 // Update cart items display
 function updateCartDisplay() {
+    const cartItemsContainer = document.getElementById('cart-items');
     cartItemsContainer.innerHTML = '';
     
     if (cart.length === 0) {
         cartItemsContainer.innerHTML = '<p>Your cart is empty</p>';
-        cartTotalElement.textContent = 'Total: $0.00';
+        document.getElementById('cart-total').textContent = 'Total: ₹0.00';
         return;
     }
     
@@ -101,12 +105,13 @@ function updateCartDisplay() {
         itemElement.className = 'cart-item';
         itemElement.innerHTML = `
             <span>${item.name} x${item.quantity}</span>
-            <span>$${(item.price * item.quantity).toFixed(2)}</span>
+            <span>₹${(item.price * item.quantity).toFixed(2)}</span>
         `;
         cartItemsContainer.appendChild(itemElement);
     });
     
-    cartTotalElement.textContent = `Total: $${cartTotal.toFixed(2)}`;
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    document.getElementById('cart-total').textContent = `Total: ₹${total.toFixed(2)}`;
 }
 
 // Proceed to checkout
@@ -177,3 +182,85 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+
+// Delivery option toggle
+document.querySelectorAll('input[name="delivery"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+        const addressContainer = document.getElementById('delivery-address-container');
+        const paymentGateway = document.getElementById('payment-gateway');
+        
+        if (this.value === 'home') {
+            addressContainer.style.display = 'block';
+            paymentGateway.style.display = 'block';
+            updateOrderTotal(50); // Add delivery charge
+        } else {
+            addressContainer.style.display = 'none';
+            paymentGateway.style.display = 'none';
+            updateOrderTotal(0); // Remove delivery charge
+        }
+    });
+});
+
+// Payment method toggle
+document.querySelectorAll('input[name="payment"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+        document.getElementById('online-payment').style.display = 
+            this.value === 'online' ? 'block' : 'none';
+    });
+});
+
+// Update order total with delivery charge
+function updateOrderTotal(deliveryCharge) {
+    const cartTotal = calculateCartTotal(); // Your existing cart total function
+    document.getElementById('order-total').textContent = 
+        `Total: ₹${(cartTotal + deliveryCharge).toFixed(2)}`;
+}
+
+
+// Show checkout modal when proceeding from cart
+document.getElementById('checkout-btn').addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    // Hide cart modal
+    document.getElementById('cart-modal').style.display = 'none';
+    
+    // Show checkout modal
+    document.getElementById('checkout-modal').style.display = 'block';
+    
+    // Initialize delivery options
+    updateOrderTotal(0);
+});
+
+// Close modal functionality (add to existing close handlers)
+document.querySelectorAll('.close').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.getElementById('checkout-modal').style.display = 'none';
+    });
+});
+
+// Close when clicking outside modal
+window.addEventListener('click', function(e) {
+    if (e.target === document.getElementById('checkout-modal')) {
+        document.getElementById('checkout-modal').style.display = 'none';
+    }
+});
+
+// In your existing cart JavaScript
+document.getElementById('checkout-btn').addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    // Hide cart modal
+    document.getElementById('cart-modal').style.display = 'none';
+    
+    // Show checkout modal
+    document.getElementById('checkout-modal').style.display = 'block';
+  });
+
+
+
+
+  
+  
+  
+  
+  
