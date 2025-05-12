@@ -26,17 +26,19 @@
         
         /* Navbar Styles */
         .navbar {
-            display: flex;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 50px;
-            background-color: #fff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-
-        }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px; /* Smaller height */
+  background-color: #fff; /* or any background */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* or center if needed */
+  padding: 0 20px;
+}
         
 .cart-icon {
     position: relative;
@@ -86,7 +88,7 @@
 
 .mobile-menu {
     position: fixed;
-    top: 60px;
+    top: 59px;
     left: -100%;
     width:70%;
     height: 100vh;
@@ -686,8 +688,9 @@
 }
 /* about section with animation */
 .about-section {
-  padding: 80px 20px;
-  background-color: #f9f9f9;
+    padding: 0px 24px;
+    background-color: #fffafa;
+
 }
 
 .about-container {
@@ -752,6 +755,106 @@
   transform: translateY(0);
 }
 
+
+.review-slider {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+  padding: 30px 0;
+}
+
+.review-track {
+  display: flex;
+  transition: transform 0.4s ease;
+}
+
+.review-card {
+  min-width: 300px;
+  max-width: 300px;
+  margin: 0 10px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+}
+
+.review-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.review-card h4 {
+  margin: 10px 0 5px;
+  font-size: 18px;
+}
+
+.review-card p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.stars {
+  font-size: 18px;
+  color: #f5a623;
+}
+
+.slider-btn {
+  position: absolute;
+  top: 45%;
+  transform: translateY(-50%);
+  background: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+}
+
+#prevBtn {
+  left: 5px;
+}
+
+#nextBtn {
+  right: 5px;
+}
+
+.reviews-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.reviews-heading {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.reviews-heading h2 {
+  font-size: 36px;
+  color: #222;
+  margin-bottom: 10px;
+}
+
+.reviews-heading p {
+  font-size: 18px;
+  color: #555;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+
+
+
+
 /* Responsive */
 @media (max-width: 768px) {
   .about-container {
@@ -768,6 +871,21 @@
   }
 }
 
+/* for checkout form */
+
+@media (max-width: 768px) {
+.checkout-modal .modal-content {
+    background-color: #eee;
+    margin: 8% auto;
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 491px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    max-height: 82vh;
+    overflow-y: auto;
+}
+}
 
 
 
@@ -857,7 +975,7 @@
             <a href="#">Home</a>
             <a href="#menuid">Menu</a>
             <a href="#">About</a>
-            <a href="#">Reviews</a>
+            <a href="#reviewid">Reviews</a>
             <a href="#">Contacts</a>
         </div>
         <div class="cart-icon">
@@ -880,11 +998,11 @@
     </div>
     <!-- Mobile Menu Links (initially hidden) -->
 <div class="mobile-menu" >
-    <a href="#" onclick="closeMobileMenu()">Home</a>
-    <a href="#menuid" onclick="closeMobileMenu()">Menu</a>
-    <a href="#" onclick="closeMobileMenu()">About</a>
-    <a href="#" onclick="closeMobileMenu()">Reviews</a>
-    <a href="#" onclick="closeMobileMenu()">Contacts</a>
+    <a href="#">Home</a>
+    <a href="#menuid" >Menu</a>
+    <a href="#">About</a>
+    <a href="#reviewid">Reviews</a>
+    <a href="#">Contacts</a>
 </div>
 </nav>
 
@@ -948,42 +1066,42 @@
                 <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38" alt="Margherita Pizza">
                 <h3>Margherita</h3>
                 <p>Classic tomato and mozzarella</p>
-                <div class="price">$12.99</div>
+                <div class="price">₹90</div>
                 <button class="add-to-cart" data-name="Margherita" data-price="12.99">Add to Cart</button>
             </div>
             <div class="pizza-item">
                 <img src="https://images.unsplash.com/photo-1588315029754-2dd089d39a1a" alt="Pepperoni Pizza">
                 <h3>Pepperoni</h3>
                 <p>Classic with spicy pepperoni</p>
-                <div class="price">$14.99</div>
+                <div class="price">₹100</div>
                 <button class="add-to-cart" data-name="Pepperoni" data-price="14.99">Add to Cart</button>
             </div>
             <div class="pizza-item">
                 <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3" alt="Vegetarian Pizza">
                 <h3>Vegetarian</h3>
                 <p>Fresh veggies on tomato base</p>
-                <div class="price">$13.99</div>
+                <div class="price">₹80</div>
                 <button class="add-to-cart" data-name="Vegetarian" data-price="13.99">Add to Cart</button>
             </div>
             <div class="pizza-item">
                 <img src="https://images.unsplash.com/photo-1620374645498-af6bd681a0bd" alt="Hawaiian Pizza">
                 <h3>Hawaiian</h3>
                 <p>Ham and pineapple combo</p>
-                <div class="price">$15.99</div>
+                <div class="price">₹75</div>
                 <button class="add-to-cart" data-name="Hawaiian" data-price="15.99">Add to Cart</button>
             </div>
             <div class="pizza-item">
                 <img src="https://images.unsplash.com/photo-1628840042765-356cda07504e" alt="BBQ Chicken Pizza">
                 <h3>BBQ Chicken</h3>
                 <p>Smoky BBQ sauce with chicken</p>
-                <div class="price">$16.99</div>
+                <div class="price">₹109</div>
                 <button class="add-to-cart" data-name="BBQ Chicken" data-price="16.99">Add to Cart</button>
             </div>
             <div class="pizza-item">
                 <img src="https://images.unsplash.com/photo-1541745537411-b8046dc6d66c" alt="Supreme Pizza">
                 <h3>Supreme</h3>
                 <p>All our toppings combined</p>
-                <div class="price">$17.99</div>
+                <div class="price">₹150</div>
                 <button class="add-to-cart" data-name="Supreme" data-price="17.99">Add to Cart</button>
             </div>
         </div>
@@ -999,7 +1117,7 @@
                 <p class="empty-cart-message">Your cart is empty</p>
             </div>
             <div class="cart-total">
-                Total: $<span id="cartTotal">0.00</span>
+                Total: ₹<span id="cartTotal">0.00</span>
             </div>
             <button onclick="openCheckoutModal()" class="checkout-btn">Proceed to Checkout</button>
             
@@ -1009,9 +1127,9 @@
 
 
     <!-- Footer -->
-    <footer>
+    <!-- <footer>
         <p>&copy; 2025 Verde Crust. All rights reserved.</p>
-    </footer>
+    </footer> -->
     
 
     <!-- Checkout Form Modal -->
@@ -1126,10 +1244,54 @@
     </div>
   </div>
 </section>
-<script>
-    
 
-</script>
+
+<section class="reviews-section" id="reviewid">
+  <div class="reviews-heading">
+    <h2>Our Reviews</h2>
+    <p>What our happy customers say about our pizzas and service.</p>
+  </div>
+<div class="review-slider">
+  <div class="review-track" id="reviewTrack">
+    <div class="review-card">
+      <img src="https://i.pravatar.cc/100?img=1" alt="Customer" />
+      <h4>Utkarsh</h4>
+      <p>Delicious pizza and great service. Highly recommended!</p>
+      <div class="stars">★★★★★</div>
+    </div>
+    <div class="review-card">
+      <img src="https://i.pravatar.cc/100?img=2" alt="Customer" />
+      <h4>Utkarsh Sharma</h4>
+      <p>Excellent crust and fresh toppings. Will order again!</p>
+      <div class="stars">★★★★☆</div>
+    </div>
+    <div class="review-card">
+      <img src="https://i.pravatar.cc/100?img=2" alt="Customer" />
+      <h4>Utkarsh Sharma</h4>
+      <p>Excellent crust and fresh toppings. Will order again!</p>
+      <div class="stars">★★★★☆</div>
+    </div>
+    <div class="review-card">
+      <img src="https://i.pravatar.cc/100?img=2" alt="Customer" />
+      <h4>Utkarsh Sharma</h4>
+      <p>Excellent crust and fresh toppings. Will order again!</p>
+      <div class="stars">★★★★☆</div>
+    </div>
+    <div class="review-card">
+      <img src="https://i.pravatar.cc/100?img=2" alt="Customer" />
+      <h4>Utkarsh Sharma</h4>
+      <p>Excellent crust and fresh toppings. Will order again!</p>
+      <div class="stars">★★★★☆</div>
+    </div>
+    <!-- Add more reviews here -->
+  </div>
+  <button id="prevBtn" class="slider-btn">&#10094;</button>
+  <button id="nextBtn" class="slider-btn">&#10095;</button>
+</div>
+
+</section>
+
+
 
 
 
@@ -1137,6 +1299,28 @@
 
 <!-- review section js -->
  <script>
+const track = document.getElementById('reviewTrack');
+const nextBtn = document.getElementById('nextBtn');
+const prevBtn = document.getElementById('prevBtn');
+
+let position = 0;
+const cardWidth = 320; // card + margin
+
+nextBtn.addEventListener('click', () => {
+  const maxScroll = -(track.scrollWidth - track.clientWidth);
+  if (position > maxScroll) {
+    position -= cardWidth;
+    track.style.transform = `translateX(${position}px)`;
+  }
+});
+
+prevBtn.addEventListener('click', () => {
+  if (position < 0) {
+    position += cardWidth;
+    track.style.transform = `translateX(${position}px)`;
+  }
+});
+
 
 </script>
 
@@ -1290,7 +1474,7 @@ function renderCartItems() {
     cart.forEach(item => {
         itemsHTML += `
             <div class="cart-item">
-                <span class="cart-item-name">${item.name}</span>
+                <span class="cart-item-name">₹{item.name}</span>
                 <span class="cart-item-price">$${item.price.toFixed(2)}</span>
             </div>
         `;
