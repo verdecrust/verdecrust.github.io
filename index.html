@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verde Crust - Delicious Pizzas</title>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css">
 
     <style>
@@ -688,7 +690,7 @@
 }
 /* about section with animation */
 .about-section {
-    padding: 0px 24px;
+    padding: 80px 24px;
     background-color: #fffafa;
 
 }
@@ -851,7 +853,176 @@
   margin: 0 auto;
 }
 
+/* contact us */
 
+.contact-section {
+  padding: 80px 20px;
+  background-color: #f9f9f9;
+}
+
+.contact-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.contact-form {
+  flex: 1 1 300px;
+}
+
+.contact-form h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.contact-form p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.contact-form form input,
+.contact-form form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.contact-form form button {
+  padding: 12px 25px;
+  background-color: #ff6347;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.contact-form form button:hover {
+  background-color: #e5533d;
+}
+
+.contact-map {
+  flex: 1 1 300px;
+}
+
+/* Simple animations */
+.animated {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1s forwards;
+}
+
+.animated.fadeInLeft {
+  transform: translateX(-30px);
+  animation: fadeInLeft 1s forwards;
+}
+
+.animated.fadeInRight {
+  transform: translateX(30px);
+  animation: fadeInRight 1s forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* contact info */
+
+.contact-info-section {
+  background-color: #fff;
+  padding: 60px 20px;
+  text-align: center;
+  border-top: 1px solid #eee;
+}
+
+.contact-info-container {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.contact-info-container h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.contact-info-container p {
+  margin-bottom: 30px;
+  font-size: 1rem;
+  color: #555;
+}
+
+.info-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 30px;
+}
+
+.info-item {
+  flex: 1 1 200px;
+  padding: 10px;
+}
+
+.info-item h4 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.info-item p a {
+  color: #ff6347;
+  text-decoration: none;
+}
+
+.social-icons a {
+  font-size: 24px;
+  margin: 0 10px;
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 0.2s ease-in-out;
+}
+
+.social-icons a:hover {
+  transform: scale(1.2);
+}
+
+/* Reuse animation */
+.animated {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1s forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 
 
@@ -886,7 +1057,83 @@
     overflow-y: auto;
 }
 }
+/* 
+footer */
 
+.footer {
+  background-color: #1b1b1b;
+  color: #f1f1f1;
+  padding: 40px 20px 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-brand {
+  max-width: 350px;
+}
+
+.footer-brand h2 {
+  font-size: 28px;
+  color: #ffb703;
+  margin-bottom: 10px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+.footer-links h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links ul li {
+  margin-bottom: 8px;
+}
+
+.footer-links ul li a {
+  color: #ccc;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links ul li a:hover {
+  color: #ffb703;
+}
+
+.social-icons a {
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 20px;
+  color: #ccc;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #ffb703;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid #333;
+  font-size: 14px;
+  color: #aaa;
+}
 
 
 
@@ -964,6 +1211,7 @@
     </style>
 </head>
 <body>
+    <section id="homeid">
     <!-- Navbar -->
 <nav class="navbar">
     <div class="logo">VERDE CRUST</div>
@@ -972,11 +1220,11 @@
     <!-- Desktop Navigation -->
     <div class="desktop-nav">
         <div class="nav-links">
-            <a href="#">Home</a>
+            <a href="#homeid">Home</a>
             <a href="#menuid">Menu</a>
-            <a href="#">About</a>
+            <a href="#aboutid">About</a>
             <a href="#reviewid">Reviews</a>
-            <a href="#">Contacts</a>
+            <a href="#contactid">Contacts</a>
         </div>
         <div class="cart-icon">
             🛒
@@ -998,11 +1246,11 @@
     </div>
     <!-- Mobile Menu Links (initially hidden) -->
 <div class="mobile-menu" >
-    <a href="#">Home</a>
+    <a href="#homeid">Home</a>
     <a href="#menuid" >Menu</a>
-    <a href="#">About</a>
+    <a href="#aboutid">About</a>
     <a href="#reviewid">Reviews</a>
-    <a href="#">Contacts</a>
+    <a href="#contactid">Contacts</a>
 </div>
 </nav>
 
@@ -1037,7 +1285,7 @@
             <div class="slider-dot" onclick="currentSlide(2)"></div>
         </div>
     </div>
-    
+    </section>
     <!-- Hero Section -->
     <section class="hero">
         <h2>Verde Crust</h2>
@@ -1220,7 +1468,7 @@
   </div>
 
 
-  <section class="about-section" id="about">
+  <section class="about-section" id="aboutid">
   <div class="about-container">
     <div class="about-image reveal">
   <video autoplay muted loop playsinline>
@@ -1290,6 +1538,171 @@
 </div>
 
 </section>
+
+
+<section class="contact-info-section" id="contactid">
+  <div class="contact-info-container animated fadeInUp">
+    <h2>Get in Touch</h2>
+    <p>Feel free to reach us via the following contact details:</p>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <h4>📍 Address</h4>
+        <p>Amba Enclave,Street no.3<br>Bulandshahr</p>
+      </div>
+
+      <div class="info-item">
+        <h4>📞 Phone</h4>
+        <p><a href="tel:+911234567890">+91 12345 67890</a></p>
+      </div>
+
+      <div class="info-item">
+        <h4>✉️ Email</h4>
+        <p><a href="mailto:contact@verdecrust.in">contact@verdecrust.in</a></p>
+      </div>
+
+      <div class="info-item social">
+        <h4>🔗 Follow Us</h4>
+        <div class="social-icons">
+          <a href="https://www.facebook.com/"><i class="fa-brands fa-facebook fa-lg" style="color: #74C0FC;"></i></a>
+          <a href="#" target="_blank"><i class="fa-brands fa-instagram fa-lg" style="color: #74C0FC;"></i></a>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- contact us -->
+<section id="contact" class="contact-section">
+  <div class="contact-container">
+    <div class="contact-form animated fadeInLeft">
+      <h2>Contact Us</h2>
+      <p>We'd love to hear from you! Fill out the form below to get in touch.</p>
+      <form>
+        <input type="text" placeholder="Your Name" required />
+        <input type="email" placeholder="Your Email" required />
+        <textarea rows="4" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+
+    <div class="contact-map animated fadeInRight">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1534.7799928516604!2d77.84244014739473!3d28.39394977853603!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ca7006513f1fb%3A0xfb3f8d7c1cd4e56d!2sVerde%20Crust!5e0!3m2!1sen!2sin!4v1747129485539!5m2!1sen!2sin" width="500" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        
+      </iframe>
+    </div>
+  </div>
+</section>
+
+
+<!-- <form id="feedbackForm" class="animate-on-scroll">
+  <input type="text" name="name" placeholder="Your Name" required>
+  <input type="email" name="email" placeholder="Email" required>
+  <textarea name="message" placeholder="Your Feedback"></textarea>
+  <div class="rating">
+    <span class="star" data-rating="1">★</span>
+    <span class="star" data-rating="2">★</span>
+    <span class="star" data-rating="3">★</span>
+    <span class="star" data-rating="4">★</span>
+    <span class="star" data-rating="5">★</span>
+    <input type="hidden" name="rating" id="ratingValue">
+  </div>
+  <button type="submit">Submit Feedback</button>
+</form>
+
+<script>
+// Google Apps Script URL (See Step 2)
+const scriptURL = 'YOUR_APPS_SCRIPT_URL';
+
+document.getElementById('feedbackForm').addEventListener('submit', e => {
+  e.preventDefault();
+  
+  // Get rating before submit
+  const rating = document.querySelector('.star.filled')?.dataset.rating || 0;
+  document.getElementById('ratingValue').value = rating;
+  
+  fetch(scriptURL, {
+    method: 'POST',
+    body: new FormData(document.getElementById('feedbackForm'))
+  })
+  .then(response => alert('Thank you for your feedback!'))
+  .catch(error => console.error('Error!', error.message));
+});
+</script> -->
+
+<form action="https://formsubmit.co/utkarsh.india403@gmail.com" method="POST">
+  <!-- Required Fields -->
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_next" value="https://verdecrust.github.com/thank-you.html">
+  
+  <!-- Your Form Fields -->
+  <input type="text" name="name" placeholder="Your Name" required>
+  <input type="email" name="email" placeholder="Email" required>
+  <textarea name="feedback" placeholder="Message"></textarea>
+  
+  <!-- Star Rating -->
+  <div class="star-rating">
+    ★ ★ ★ ★ ★
+    <input type="hidden" name="rating" value="">
+  </div>
+  
+  <button type="submit">Send Feedback</button>
+</form>
+
+<script>
+// Simple star rating
+document.querySelectorAll('.star-rating > ★').forEach(star => {
+  star.addEventListener('click', function() {
+    const rating = this.textContent.trim().length;
+    this.parentElement.querySelector('input').value = rating;
+  });
+});
+</script>
+
+
+
+<!-- footer -->
+
+<!-- Footer Section -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <h2>Verde Crust</h2>
+      <p>Serving delicious vegetarian pizzas with a touch of love and freshness.</p>
+    </div>
+
+    <div class="footer-links">
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#homeid">Home</a></li>
+          <li><a href="#aboutid">About</a></li>
+          <li><a href="#menuid">Menu</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Follow Us</h4>
+        <div class="social-icons">
+          <a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <!-- <a href="#"><i class="fab fa-x-twitter"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2025 Verde Crust. All Rights Reserved.</p>
+  </div>
+</footer>
 
 
 
