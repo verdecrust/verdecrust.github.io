@@ -1635,13 +1635,10 @@ document.getElementById('feedbackForm').addEventListener('submit', e => {
 });
 </script> -->
 
-<form action="https://formsubmit.co/utkarsh.india403@gmail.com" method="POST">
-  <!-- Required Fields -->
-  <input type="hidden" name="_captcha" value="false">
-  <input type="hidden" name="_next" value="https://verdecrust.github.com/thank-you.html">
-  
-  <!-- Your Form Fields -->
-  <input type="text" name="name" placeholder="Your Name" required>
+<!-- HTML -->
+<form id="feedbackForm">
+  <!-- Your form fields here -->
+   <input type="text" name="name" placeholder="Your Name" required>
   <input type="email" name="email" placeholder="Email" required>
   <textarea name="feedback" placeholder="Message"></textarea>
   
@@ -1654,16 +1651,44 @@ document.getElementById('feedbackForm').addEventListener('submit', e => {
   <button type="submit">Send Feedback</button>
 </form>
 
+
+
+<div id="thankYouMessage" style="display:none;">
+  <div class="checkmark">✓</div>
+  <h2>Thank You!</h2>
+  <p>We appreciate your feedback.</p>
+  <button onclick="location.reload()">Submit Another</button>
+</div>
+
 <script>
-// Simple star rating
-document.querySelectorAll('.star-rating > ★').forEach(star => {
-  star.addEventListener('click', function() {
-    const rating = this.textContent.trim().length;
-    this.parentElement.querySelector('input').value = rating;
+document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  fetch('https://formsubmit.co/ajax/utkarsh.india403@gmail.com', {
+    method: 'POST',
+    body: new FormData(this)
+  })
+  .then(response => {
+    document.getElementById('feedbackForm').style.display = 'none';
+    document.getElementById('thankYouMessage').style.display = 'block';
+  })
+  .catch(error => {
+    alert('Error submitting form. Please try again.');
   });
 });
 </script>
 
+<style>
+.checkmark {
+  color: #ff0000;
+  font-size: 80px;
+  animation: fadeIn 0.5s;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+</style>
 
 
 <!-- footer -->
