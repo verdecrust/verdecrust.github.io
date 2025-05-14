@@ -1207,6 +1207,39 @@ footer */
     }
 }
 
+        #contactForm {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        .form-group1{
+            margin-bottom: 15px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background: #2e8b57;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        /* Thank you message (hidden by default) */
+        #thankYouMessage {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+       
+
 
     </style>
 </head>
@@ -1577,7 +1610,7 @@ footer */
 
 
 <!-- contact us -->
-<section id="contact" class="contact-section">
+<!-- <section id="contact" class="contact-section">
   <div class="contact-container">
     <div class="contact-form animated fadeInLeft">
       <h2>Contact Us</h2>
@@ -1597,7 +1630,7 @@ footer */
       </iframe>
     </div>
   </div>
-</section>
+</section> -->
 
 
 <!-- <form id="feedbackForm" class="animate-on-scroll">
@@ -1636,14 +1669,14 @@ document.getElementById('feedbackForm').addEventListener('submit', e => {
 </script> -->
 
 <!-- HTML -->
-<form id="feedbackForm">
-  <!-- Your form fields here -->
+<!-- <form id="feedbackForm">
+
    <input type="text" name="name" placeholder="Your Name" required>
   <input type="email" name="email" placeholder="Email" required>
-  <textarea name="feedback" placeholder="Message"></textarea>
+  <textarea name="feedback" placeholder="Message"></textarea> -->
   
   <!-- Star Rating -->
-  <div class="star-rating">
+  <!-- <div class="star-rating">
     ★ ★ ★ ★ ★
     <input type="hidden" name="rating" value="">
   </div>
@@ -1654,7 +1687,7 @@ document.getElementById('feedbackForm').addEventListener('submit', e => {
 
 
 <div id="thankYouMessage" style="display:none;">
-  <div class="checkmark">✓</div>
+  
   <h2>Thank You!</h2>
   <p>We appreciate your feedback.</p>
   <button onclick="location.reload()">Submit Another</button>
@@ -1688,7 +1721,170 @@ document.getElementById('feedbackForm').addEventListener('submit', function(e) {
   from { opacity: 0; transform: scale(0.8); }
   to { opacity: 1; transform: scale(1); }
 }
+</style> -->
+
+
+
+
+    
+
+    <div id="contactForm">
+        <h2>Feedback</h2>
+        <form id="feedbackForm">
+            <div class="form-group1">
+                <label>Name</label>
+                <input type="text" name="entry.579181296" required>
+            </div>
+            
+            <div class="form-group1">
+                <label>Email</label>
+                <input type="email" name="entry.1498514214" required>
+            </div>
+            
+            <div class="form-group1">
+                <label>Message</label>
+                <textarea name="entry.546144563" rows="4" required></textarea>
+            </div>
+            
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+    
+    <div id="thankYouMessage" style="display:none;">
+  <div class="thank-you-container">
+    <!-- Animated Checkmark -->
+    <svg class="checkmark" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+      <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+      <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+    </svg>
+    
+    <!-- Message -->
+    <h2>Thanks! 🍕</h2>
+    <p class="thank-you-text">Your feedback has been received!<br>We'll use it to make our pizzas even better.</p>
+    
+    <!-- Verde Crust Branding -->
+    <div class="pizza-animation">
+      <div class="slice" style="--delay:0s">🍕</div>
+      <div class="slice" style="--delay:0.2s">🍕</div>
+      <div class="slice" style="--delay:0.4s">🍕</div>
+    </div>
+    
+    <button class="return-btn" onclick="resetForm()">
+      Send Another Feedback
+    </button>
+  </div>
+</div>
+
+<style>
+/* Animation Styles */
+.thank-you-container {
+  text-align: center;
+  padding: 40px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.checkmark {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 30px;
+}
+
+.checkmark-circle {
+  stroke: #2e8b57;
+  stroke-width: 2;
+  animation: circle-anim 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark-check {
+  stroke: #2e8b57;
+  stroke-width: 4;
+  stroke-linecap: round;
+  animation: check-anim 0.4s 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes circle-anim {
+  0% { stroke-dasharray: 0 150; stroke-dashoffset: 0; }
+  100% { stroke-dasharray: 150 150; stroke-dashoffset: 0; }
+}
+
+@keyframes check-anim {
+  0% { stroke-dasharray: 0 50; stroke-dashoffset: 50; opacity: 1; }
+  100% { stroke-dasharray: 50 50; stroke-dashoffset: 0; opacity: 1; }
+}
+
+/* Pizza Animation */
+.pizza-animation {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.slice {
+  font-size: 40px;
+  animation: bounce 0.8s var(--delay) infinite alternate;
+}
+
+@keyframes bounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-15px); }
+}
+
+/* Button */
+.return-btn {
+  background: #2e8b57;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 20px;
+}
+
+.return-btn:hover {
+  background: #1f6e45;
+  transform: translateY(-2px);
+}
 </style>
+
+<script>
+function resetForm() {
+  document.getElementById('feedbackForm').reset();
+  document.getElementById('contactForm').style.display = 'block';
+  document.getElementById('thankYouMessage').style.display = 'none';
+}
+</script>
+
+    <script>
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Submit to Google Forms
+            fetch('https://docs.google.com/forms/d/e/1FAIpQLSfE0Q-TCIKooMESwfHDlIsVF0CcorDBTIFVcUPVqiPFOggsFg/formResponse?usp=pp_url', {
+                method: 'POST',
+                body: new FormData(this),
+                mode: 'no-cors'
+            })
+            .then(() => {
+                // Show thank you message
+                document.getElementById('contactForm').style.display = 'none';
+                document.getElementById('thankYouMessage').style.display = 'block';
+            })
+            .catch(() => {
+                alert('Error submitting form. Please try again.');
+            });
+        });
+        
+        function resetForm() {
+            document.getElementById('feedbackForm').reset();
+            document.getElementById('contactForm').style.display = 'block';
+            document.getElementById('thankYouMessage').style.display = 'none';
+        }
+    </script>
+
 
 
 <!-- footer -->
