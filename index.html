@@ -378,11 +378,12 @@
         }
         
         .cart-item {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 1fr auto auto; /* Name | Quantity Controls | Price */
             align-items: center;
+            gap: 15px;
             padding: 10px 0;
-            border-bottom: 1px solid #f0f0f0;
+            border-bottom: 1px solid #eee;
         }
         
         .cart-item:last-child {
@@ -390,11 +391,17 @@
         }
         
         .cart-item-name {
-            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150px;
         }
         
         .cart-item-price {
             color: #2e8b57;
+            justify-self: end; /* Align price to the right */
+            min-width: 60px; /* Ensure price column has fixed width */
+            text-align: right;
         }
         
         .cart-total {
@@ -1241,6 +1248,145 @@ footer */
        
 
 
+/* Smaller + and - buttons */
+.quantity-btn {
+    width: 22px;
+    height: 22px;
+    border: 1px solid #ffffff;
+    background: #02ad63;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.2s;
+}
+
+
+.quantity-btn:hover {
+    background: #0d7c32;
+}
+
+/* Optional: Adjust spacing around quantity number */
+.cart-item-quantity {
+    min-width: 15px; /* Smaller width */
+    text-align: center;
+    font-size: 16px; /* Adjust if needed */
+    margin: 0 5px;   /* Less spacing */
+}
+
+.cart-item-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-self: end; /* Align to the right */
+}
+
+
+/* top deals */
+.combos-section {
+  padding: 60px 20px;
+  background-color: #fff8f0;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  color: #c0392b;
+  margin-bottom: 10px;
+  animation: fadeInDown 1s ease-in-out;
+}
+
+.section-subtitle {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 40px;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.combo-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.combo-card {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  padding: 20px;
+  width: 280px;
+  transition: transform 0.3s ease;
+  animation: slideUp 1s ease forwards;
+}
+
+.combo-card img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.combo-card h3 {
+  font-size: 1.4rem;
+  color: #e74c3c;
+  margin-bottom: 10px;
+}
+
+.combo-card p {
+  color: #333;
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+}
+
+.combo-card .price {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #27ae60;
+}
+
+.combo-card:hover {
+  transform: translateY(-10px);
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.avail-note {
+  font-size: 1rem;
+  color: #c0392b;
+  font-weight: 500;
+  margin-bottom: 30px;
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+
     </style>
 </head>
 <body>
@@ -1255,6 +1401,7 @@ footer */
         <div class="nav-links">
             <a href="#homeid">Home</a>
             <a href="#menuid">Menu</a>
+            <a href="#combos">Top Deals</a>
             <a href="#aboutid">About</a>
             <a href="#reviewid">Reviews</a>
             <a href="#contactid">Contacts</a>
@@ -1281,6 +1428,7 @@ footer */
 <div class="mobile-menu" >
     <a href="#homeid">Home</a>
     <a href="#menuid" >Menu</a>
+    <a href="#combos">Top Deals</a>
     <a href="#aboutid">About</a>
     <a href="#reviewid">Reviews</a>
     <a href="#contactid">Contacts</a>
@@ -1348,42 +1496,42 @@ footer */
                 <h3>Margherita</h3>
                 <p>Classic tomato and mozzarella</p>
                 <div class="price">₹90</div>
-                <button class="add-to-cart" data-name="Margherita" data-price="12.99">Add to Cart</button>
+                <button class="add-to-cart" data-name="Margherita" data-price="90">Add to Cart</button>
             </div>
             <div class="pizza-item">
                 <img src="https://images.unsplash.com/photo-1588315029754-2dd089d39a1a" alt="Pepperoni Pizza">
                 <h3>Pepperoni</h3>
                 <p>Classic with spicy pepperoni</p>
                 <div class="price">₹100</div>
-                <button class="add-to-cart" data-name="Pepperoni" data-price="14.99">Add to Cart</button>
+                <button class="add-to-cart" data-name="Pepperoni" data-price="100">Add to Cart</button>
             </div>
             <div class="pizza-item">
                 <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3" alt="Vegetarian Pizza">
                 <h3>Vegetarian</h3>
                 <p>Fresh veggies on tomato base</p>
                 <div class="price">₹80</div>
-                <button class="add-to-cart" data-name="Vegetarian" data-price="13.99">Add to Cart</button>
+                <button class="add-to-cart" data-name="Vegetarian" data-price="80">Add to Cart</button>
             </div>
             <div class="pizza-item">
                 <img src="https://images.unsplash.com/photo-1620374645498-af6bd681a0bd" alt="Hawaiian Pizza">
                 <h3>Hawaiian</h3>
                 <p>Ham and pineapple combo</p>
                 <div class="price">₹75</div>
-                <button class="add-to-cart" data-name="Hawaiian" data-price="15.99">Add to Cart</button>
+                <button class="add-to-cart" data-name="Hawaiian" data-price="75">Add to Cart</button>
             </div>
             <div class="pizza-item">
-                <img src="https://images.unsplash.com/photo-1628840042765-356cda07504e" alt="BBQ Chicken Pizza">
-                <h3>BBQ Chicken</h3>
-                <p>Smoky BBQ sauce with chicken</p>
+                <img src="img/pizza5.jpg" alt="BBQ Chicken Pizza">
+                <h3>OG Cheese Pizza</h3>
+                <p>Extra cheese pizza</p>
                 <div class="price">₹109</div>
-                <button class="add-to-cart" data-name="BBQ Chicken" data-price="16.99">Add to Cart</button>
+                <button class="add-to-cart" data-name="OG Cheese Pizza" data-price="109">Add to Cart</button>
             </div>
             <div class="pizza-item">
                 <img src="https://images.unsplash.com/photo-1541745537411-b8046dc6d66c" alt="Supreme Pizza">
                 <h3>Supreme</h3>
                 <p>All our toppings combined</p>
                 <div class="price">₹150</div>
-                <button class="add-to-cart" data-name="Supreme" data-price="17.99">Add to Cart</button>
+                <button class="add-to-cart" data-name="Supreme" data-price="150">Add to Cart</button>
             </div>
         </div>
     </section>
@@ -1407,98 +1555,139 @@ footer */
     </div>
 
 
-    <!-- Footer -->
-    <!-- <footer>
-        <p>&copy; 2025 Verde Crust. All rights reserved.</p>
-    </footer> -->
+    
     
 
-    <!-- Checkout Form Modal -->
-    <div class="checkout-modal" id="checkoutModal">
-        <div class="modal-content">
-            <span class="close-checkout-modal">&times;</span>
-            <h2>Checkout</h2>
-            <form id="checkoutForm">
-                <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" required>
+  <!-- Checkout Form Modal -->
+<div class="checkout-modal" id="checkoutModal">
+    <div class="modal-content">
+        <span class="close-checkout-modal">&times;</span>
+        <h2>Checkout</h2>
+        <form id="checkoutForm">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Mobile Number</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+
+            <div class="form-group">
+                <label>Delivery Method</label>
+                <div class="delivery-options">
+                    <label class="radio-option">
+                        <input type="radio" name="deliveryMethod" value="pickup" checked>
+                        <span>Pickup</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="deliveryMethod" value="delivery">
+                        <span>Home Delivery</span>
+                    </label>
                 </div>
-                
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="phone">Mobile Number</label>
-                    <input type="tel" id="phone" name="phone" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>Delivery Method</label>
-                    <div class="delivery-options">
-                        <label class="radio-option">
-                            <input type="radio" name="deliveryMethod" value="pickup" checked>
-                            <span>Pickup</span>
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="deliveryMethod" value="delivery">
-                            <span>Home Delivery</span>
-                        </label>
-                    </div>
-                </div>
-                
-                <div class="form-group pickup-options" id="pickupOptions">
-                    <label for="pickupTime">Pickup Time</label>
-                    <select id="pickupTime" name="pickupTime">
-                        <option value="asap">ASAP (30-40 mins)</option>
-                        <option value="12:00">12:00 PM</option>
-                        <option value="12:30">12:30 PM</option>
-                        <option value="13:00">1:00 PM</option>
-                        <!-- Add more times as needed -->
-                    </select>
-                </div>
-                
-                <div class="form-group delivery-address" id="deliveryAddress" style="display: none;">
-                    <label for="address">Delivery Address</label>
-                    <textarea id="address" name="address" rows="3"></textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label for="instructions">Special Instructions</label>
-                    <textarea id="instructions" name="instructions" rows="2" placeholder="Any special requests?"></textarea>
-                </div>
-                
-                <button type="submit" class="submit-order-btn">Place Order</button>
-            </form>
+            </div>
+
+            <div class="form-group pickup-options" id="pickupOptions">
+                <label for="pickupTime">Pickup Time</label>
+                <select id="pickupTime" name="pickupTime">
+                    <option value="asap">ASAP (30-40 mins)</option>
+                    <option value="12:00">12:00 PM</option>
+                    <option value="12:30">12:30 PM</option>
+                    <option value="13:00">1:00 PM</option>
+                </select>
+            </div>
+
+            <div class="form-group delivery-address" id="deliveryAddress" style="display: none;">
+                <label for="address">Delivery Address</label>
+                <textarea id="address" name="address" rows="3"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="instructions">Special Instructions</label>
+                <textarea id="instructions" name="instructions" rows="2" placeholder="Any special requests?"></textarea>
+            </div>
+
+            <button type="submit" class="submit-order-btn">Place Order</button>
+        </form>
+
+        <!-- Terms & Conditions and Privacy Policy -->
+        <div class="terms-links" style="margin-top: 15px; font-size: 0.9em; text-align: center;">
+            By placing this order, you agree to our
+            <a href="terms.html" target="_blank">Terms & Conditions</a> and
+            <a href="privacy.html" target="_blank">Privacy Policy</a>.
         </div>
     </div>
+</div>
+
 
 
 <div class="steps-section">
     <!-- Left Column -->
     <div class="steps-left" data-aos="fade-right">
-      <h2>Discover the Power of Our Products</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>
-      <button>Main action</button>
+      <h2>Discover the Taste of Verde Crust</h2>
+      <p>Enjoy the finest hand-crafted vegetarian pizzas made with love, fresh ingredients, and bold flavors. Experience pizza like never before.</p>
+      <button onclick="location.href='#menuid'" class="start-order-btn">
+  Start the Order
+</button>
     </div>
 
     <!-- Right Overlapping Cards -->
     <div class="steps-right">
       <div class="step-box" data-aos="fade-up">
-        <h3>01 <span>Choose Your Pizza</span></h3>
-        <p>Select your favorite pizza from our delicious menu options.</p>
+        <h3>01 <span>Explore the Menu</span></h3>
+        <p>Pick your favorite from our fresh, veg-only pizzas.</p>
       </div>
       <div class="step-box" data-aos="fade-up" data-aos-delay="200">
-        <h3>02 <span>Customize Your Order</span></h3>
-        <p>Personalize your pizza with cheese, sauces, and toppings.</p>
+        <h3>02 <span>Customize Your Pizza</span></h3>
+        <p>Add extra cheese, sauces, or toppings.</p>
       </div>
       <div class="step-box" data-aos="fade-up" data-aos-delay="400">
-        <h3>03 <span>Review and Add to Cart</span></h3>
-        <p>Double-check your order and place it for pickup or delivery.</p>
+        <h3>03 <span>Add to Cart & Checkout</span></h3>
+        <p>Check your order and get ready to indulge.</p>
       </div>
     </div>
   </div>
+
+<!-- top deals -->
+
+<section id="combos" class="combos-section">
+  <div class="container">
+    <h2 class="section-title">Special Discounts & Pizza Combos</h2>
+    <p class="section-subtitle">Enjoy our exclusive deals crafted for pizza lovers!</p>
+
+     <p class="avail-note">To avail these offers, please visit our shop. We’re waiting to serve you fresh and hot!</p>
+    
+    <div class="combo-cards">
+      <div class="combo-card">
+        <img src="img/pizzaimg4.jpg" alt="Combo 1">
+        <h3>Family Feast</h3>
+        <p>2 Large Pizzas + 1 Garlic Bread + 1.5L Soft Drink</p>
+        <span class="price">₹699</span>
+      </div>
+
+      <div class="combo-card">
+        <img src="img/pizzaimg4.jpg" alt="Combo 2">
+        <h3>Couple’s Delight</h3>
+        <p>1 Medium Pizza + 2 Choco Lava Cakes + 2 Drinks</p>
+        <span class="price">₹399</span>
+      </div>
+
+      <div class="combo-card">
+        <img src="img/pizzaimg4.jpg" alt="Combo 3">
+        <h3>Student Combo</h3>
+        <p>1 Personal Pizza + Fries + Soft Drink</p>
+        <span class="price">₹249</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 
   <section class="about-section" id="aboutid">
@@ -1598,7 +1787,7 @@ footer */
         <h4>🔗 Follow Us</h4>
         <div class="social-icons">
           <a href="https://www.facebook.com/"><i class="fa-brands fa-facebook fa-lg" style="color: #74C0FC;"></i></a>
-          <a href="#" target="_blank"><i class="fa-brands fa-instagram fa-lg" style="color: #74C0FC;"></i></a>
+          <a href="https://www.instagram.com/" target="_blank"><i class="fa-brands fa-instagram fa-lg" style="color: #74C0FC;"></i></a>
         
         </div>
       </div>
@@ -1607,126 +1796,6 @@ footer */
 </section>
 
 
-
-
-<!-- contact us -->
-<!-- <section id="contact" class="contact-section">
-  <div class="contact-container">
-    <div class="contact-form animated fadeInLeft">
-      <h2>Contact Us</h2>
-      <p>We'd love to hear from you! Fill out the form below to get in touch.</p>
-      <form>
-        <input type="text" placeholder="Your Name" required />
-        <input type="email" placeholder="Your Email" required />
-        <textarea rows="4" placeholder="Your Message" required></textarea>
-        <button type="submit">Send Message</button>
-      </form>
-    </div>
-
-    <div class="contact-map animated fadeInRight">
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1534.7799928516604!2d77.84244014739473!3d28.39394977853603!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ca7006513f1fb%3A0xfb3f8d7c1cd4e56d!2sVerde%20Crust!5e0!3m2!1sen!2sin!4v1747129485539!5m2!1sen!2sin" width="500" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-        
-      </iframe>
-    </div>
-  </div>
-</section> -->
-
-
-<!-- <form id="feedbackForm" class="animate-on-scroll">
-  <input type="text" name="name" placeholder="Your Name" required>
-  <input type="email" name="email" placeholder="Email" required>
-  <textarea name="message" placeholder="Your Feedback"></textarea>
-  <div class="rating">
-    <span class="star" data-rating="1">★</span>
-    <span class="star" data-rating="2">★</span>
-    <span class="star" data-rating="3">★</span>
-    <span class="star" data-rating="4">★</span>
-    <span class="star" data-rating="5">★</span>
-    <input type="hidden" name="rating" id="ratingValue">
-  </div>
-  <button type="submit">Submit Feedback</button>
-</form>
-
-<script>
-// Google Apps Script URL (See Step 2)
-const scriptURL = 'YOUR_APPS_SCRIPT_URL';
-
-document.getElementById('feedbackForm').addEventListener('submit', e => {
-  e.preventDefault();
-  
-  // Get rating before submit
-  const rating = document.querySelector('.star.filled')?.dataset.rating || 0;
-  document.getElementById('ratingValue').value = rating;
-  
-  fetch(scriptURL, {
-    method: 'POST',
-    body: new FormData(document.getElementById('feedbackForm'))
-  })
-  .then(response => alert('Thank you for your feedback!'))
-  .catch(error => console.error('Error!', error.message));
-});
-</script> -->
-
-<!-- HTML -->
-<!-- <form id="feedbackForm">
-
-   <input type="text" name="name" placeholder="Your Name" required>
-  <input type="email" name="email" placeholder="Email" required>
-  <textarea name="feedback" placeholder="Message"></textarea> -->
-  
-  <!-- Star Rating -->
-  <!-- <div class="star-rating">
-    ★ ★ ★ ★ ★
-    <input type="hidden" name="rating" value="">
-  </div>
-  
-  <button type="submit">Send Feedback</button>
-</form>
-
-
-
-<div id="thankYouMessage" style="display:none;">
-  
-  <h2>Thank You!</h2>
-  <p>We appreciate your feedback.</p>
-  <button onclick="location.reload()">Submit Another</button>
-</div>
-
-<script>
-document.getElementById('feedbackForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  
-  fetch('https://formsubmit.co/ajax/utkarsh.india403@gmail.com', {
-    method: 'POST',
-    body: new FormData(this)
-  })
-  .then(response => {
-    document.getElementById('feedbackForm').style.display = 'none';
-    document.getElementById('thankYouMessage').style.display = 'block';
-  })
-  .catch(error => {
-    alert('Error submitting form. Please try again.');
-  });
-});
-</script>
-
-<style>
-.checkmark {
-  color: #ff0000;
-  font-size: 80px;
-  animation: fadeIn 0.5s;
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.8); }
-  to { opacity: 1; transform: scale(1); }
-}
-</style> -->
-
-
-
-
-    
 
     <div id="contactForm">
         <h2>Feedback</h2>
@@ -1902,9 +1971,10 @@ function resetForm() {
         <h4>Quick Links</h4>
         <ul>
           <li><a href="#homeid">Home</a></li>
-          <li><a href="#aboutid">About</a></li>
           <li><a href="#menuid">Menu</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="#aboutid">About</a></li>
+          <li><a href="#contactid">Contact</a></li>
+          
         </ul>
       </div>
 
@@ -1912,7 +1982,7 @@ function resetForm() {
         <h4>Follow Us</h4>
         <div class="social-icons">
           <a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
           <!-- <a href="#"><i class="fab fa-x-twitter"></i></a>
           <a href="#"><i class="fab fa-youtube"></i></a> -->
         </div>
@@ -2006,6 +2076,11 @@ window.addEventListener('click', function(event) {
 </script>
 
 
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+
 
     <script>
                 // Slider functionality
@@ -2050,25 +2125,61 @@ window.addEventListener('click', function(event) {
         setInterval(autoSlide, 5000);
         
                 // Cart functionality
-let cart = [];
-const cartIcon = document.querySelectorAll('.cart-icon'); // Select all cart icons
-const cartCount = document.querySelectorAll('.cart-count'); // Select all count elements
+
+const cartIcon = document.querySelectorAll('.cart-icon');
+const cartCount = document.querySelectorAll('.cart-count');
 const cartModal = document.getElementById('cartModal');
 const cartItemsContainer = document.getElementById('cartItems');
 const cartTotalElement = document.getElementById('cartTotal');
 const closeModal = document.querySelector('.close-modal');
 const checkoutBtn = document.querySelector('.checkout-btn');
-const hamburger = document.querySelector('.hamburger');
-const mobileMenu = document.querySelector('.mobile-menu');
+const checkoutModal = document.getElementById('checkoutModal');
+const checkoutForm = document.getElementById('checkoutForm');
 
-// Add to cart buttons
+// Add to cart functionality
+// Initialize cart from localStorage or empty array
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+// Function to save cart to localStorage
+function saveCartToStorage() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+// Modified updateCart function
+function updateCart() {
+    // Count UNIQUE ITEMS (not quantities)
+    const uniqueItemCount = cart.length;
+    
+    // Update cart counter
+    cartCount.forEach(count => {
+        count.textContent = uniqueItemCount;
+        count.style.display = uniqueItemCount ? 'flex' : 'none';
+    });
+    
+    // Update cart modal if open
+    if (cartModal.style.display === 'block') {
+        renderCartItems();
+    }
+    
+    // Save to localStorage
+    saveCartToStorage();
+}
+
+// Modified add to cart functionality
 document.querySelectorAll('.add-to-cart').forEach(button => {
     button.addEventListener('click', function() {
         const name = this.getAttribute('data-name');
         const price = parseFloat(this.getAttribute('data-price'));
         
-        // Add item to cart
-        cart.push({ name, price });
+        // Check if pizza already exists in cart
+        const existingItem = cart.find(item => item.name === name);
+        
+        if (existingItem) {
+            existingItem.quantity++; // Increase quantity
+        } else {
+            cart.push({ name, price, quantity: 1 }); // Add new pizza
+        }
+        
         updateCart();
         
         // Show feedback
@@ -2078,13 +2189,21 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
         }, 1000);
     });
 });
-        
-        // Update all cart displays
+
+// Load cart when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    updateCart(); // This will render any saved cart items
+});
+
+// Update cart display
 function updateCart() {
-    // Update all cart count elements
+    // Count UNIQUE ITEMS (not quantities)
+    const uniqueItemCount = cart.length;
+    
+    // Update cart counter (shows number of unique items)
     cartCount.forEach(count => {
-        count.textContent = cart.length;
-        count.style.display = cart.length ? 'flex' : 'none';
+        count.textContent = uniqueItemCount;
+        count.style.display = uniqueItemCount ? 'flex' : 'none';
     });
     
     // Update cart modal if open
@@ -2093,7 +2212,7 @@ function updateCart() {
     }
 }
 
-        // Render cart items in modal
+// Render cart items with quantity controls
 function renderCartItems() {
     if (cart.length === 0) {
         cartItemsContainer.innerHTML = '<p class="empty-cart-message">Your cart is empty</p>';
@@ -2105,166 +2224,187 @@ function renderCartItems() {
     let itemsHTML = '';
     let total = 0;
     
-    cart.forEach(item => {
+    cart.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
         itemsHTML += `
             <div class="cart-item">
-                <span class="cart-item-name">₹{item.name}</span>
-                <span class="cart-item-price">$${item.price.toFixed(2)}</span>
+                <span class="cart-item-name">${item.name}</span>
+                <div class="cart-item-controls">
+                    <button class="quantity-btn decrease" data-index="${index}">-</button>
+                    <span class="cart-item-quantity">${item.quantity}</span>
+                    <button class="quantity-btn increase" data-index="${index}">+</button>
+                </div>
+                <span class="cart-item-price">₹${itemTotal.toFixed(2)}</span>
             </div>
         `;
-        total += item.price;
+        total += itemTotal;
     });
     
     cartItemsContainer.innerHTML = itemsHTML;
     cartTotalElement.textContent = total.toFixed(2);
     checkoutBtn.style.display = 'block';
+    
+    // Add event listeners for quantity buttons
+    document.querySelectorAll('.quantity-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const index = parseInt(this.getAttribute('data-index'));
+            if (this.classList.contains('increase')) {
+                cart[index].quantity += 1;
+            } else if (this.classList.contains('decrease')) {
+                if (cart[index].quantity > 1) {
+                    cart[index].quantity -= 1;
+                } else {
+                    cart.splice(index, 1);
+                }
+            }
+            updateCart(); // This will automatically save to localStorage
+        });
+    });
 }
 
-// Make all cart icons clickable
-document.querySelectorAll('.cart-icon').forEach(icon => {
+// Cart modal functionality
+cartIcon.forEach(icon => {
     icon.addEventListener('click', function(e) {
-        e.stopPropagation(); // Prevent mobile menu from closing
+        e.stopPropagation();
         renderCartItems();
         cartModal.style.display = 'block';
     });
 });
 
-// Close cart modal
 closeModal.addEventListener('click', function() {
     cartModal.style.display = 'none';
 });
-        
-        // Show the modal
+
+// Checkout modal functionality
 function openCheckoutModal() {
-    document.getElementById('checkoutModal').style.display = 'block';
+    if (cart.length === 0) {
+        alert('Your cart is empty. Please add items before checkout.');
+        return;
+    }
+    checkoutModal.style.display = 'block';
 }
 
-// Hide the modal
 function closeCheckoutModal() {
-    document.getElementById('checkoutModal').style.display = 'none';
+    checkoutModal.style.display = 'none';
 }
 
-// Handle clicking the close button
 document.querySelector('.close-checkout-modal').addEventListener('click', closeCheckoutModal);
 
-// Handle clicking outside the modal to close it
-window.addEventListener('click', function(event) {
-    const modal = document.getElementById('checkoutModal');
-    if (event.target === modal) {
-        closeCheckoutModal();
+// Delivery/pickup toggle
+const deliveryRadios = document.querySelectorAll('input[name="deliveryMethod"]');
+const delivery = document.getElementById('deliveryAddress');
+const pickup = document.getElementById('pickupOptions');
+
+function toggleOptions(value) {
+    if (value === 'pickup') {
+        delivery.style.display = 'none';
+        pickup.style.display = 'block';
+    } else {
+        delivery.style.display = 'block';
+        pickup.style.display = 'none';
     }
-});
+}
 
-
-// Fix for pickup/delivery toggle
-    const deliveryRadios = document.querySelectorAll('input[name="deliveryMethod"]');
-    const delivery = document.getElementById('deliveryAddress');
-    const pickup = document.getElementById('pickupOptions');
-
-    function toggleOptions(value) {
-        if (value === 'pickup') {
-            delivery.style.display = 'none';
-            pickup.style.display = 'block';
-        } else {
-            delivery.style.display = 'block';
-            pickup.style.display = 'none';
-        }
-    }
-
-    deliveryRadios.forEach((radio) => {
-        radio.addEventListener('change', function () {
-            toggleOptions(this.value);
-        });
-
-        // Set initial view based on checked radio
-        if (radio.checked) {
-            toggleOptions(radio.value);
-        }
+deliveryRadios.forEach((radio) => {
+    radio.addEventListener('change', function() {
+        toggleOptions(this.value);
     });
-
-   
-        // Form submission
-        checkoutForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                deliveryMethod: document.querySelector('input[name="deliveryMethod"]:checked').value,
-                instructions: document.getElementById('instructions').value,
-                items: cart,
-                total: cart.reduce((sum, item) => sum + item.price, 0)
-            };
-            
-            if (formData.deliveryMethod === 'pickup') {
-                formData.pickupTime = document.getElementById('pickupTime').value;
-            } else {
-                formData.address = document.getElementById('address').value;
-            }
-            
-            // In a real app, you would send this data to your server
-            console.log('Order submitted:', formData);
-            
-            // Show confirmation
-            alert('Order placed successfully! Thank you for your order.');
-            
-            // Reset everything
-            cart = [];
-            updateCart();
-            checkoutModal.style.display = 'none';
-            this.reset();
-        });
-        
-        // Close modals when clicking outside
-        window.addEventListener('click', function(event) {
-            if (event.target === cartModal) {
-                cartModal.style.display = 'none';
-            }
-            if (event.target === checkoutModal) {
-                checkoutModal.style.display = 'none';
-            }
-        });
-
-        // Hamburger menu toggle
-hamburger.addEventListener('click', function(e) {
-    e.stopPropagation();
-    this.classList.toggle('active');
-    mobileMenu.classList.toggle('active');
+    if (radio.checked) toggleOptions(radio.value);
 });
 
-// Close menus when clicking outside
-document.addEventListener('click', function(e) {
-    if (!e.target.closest('.navbar') && !e.target.closest('.mobile-menu')) {
-        hamburger.classList.remove('active');
-        mobileMenu.classList.remove('active');
+// Form submission
+checkoutForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        deliveryMethod: document.querySelector('input[name="deliveryMethod"]:checked').value,
+        instructions: document.getElementById('instructions').value,
+        items: [...cart], // Create a copy of the cart array
+        total: cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0)
+    };
+    
+    if (formData.deliveryMethod === 'pickup') {
+        formData.pickupTime = document.getElementById('pickupTime').value;
+    } else {
+        formData.address = document.getElementById('address').value;
     }
-    if (!e.target.closest('.cart-modal') && !e.target.closest('.cart-icon')) {
+    
+    // In a real app, send this data to your server
+    console.log('Order submitted:', formData);
+    
+    // Show confirmation
+    alert('Order placed successfully! Thank you for your order.');
+    
+    // Reset everything
+    cart = [];
+    updateCart();
+    checkoutModal.style.display = 'none';
+    this.reset();
+});
+
+// Close modals when clicking outside
+window.addEventListener('click', function(event) {
+    if (event.target === cartModal) {
         cartModal.style.display = 'none';
+    }
+    if (event.target === checkoutModal) {
+        checkoutModal.style.display = 'none';
     }
 });
 
 // Initialize cart
 updateCart();
 
-    // Close menu when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.navbar') && 
-            !e.target.closest('.mobile-menu') &&
-            mobileMenu.classList.contains('active')) {
-            hamburger.classList.remove('active');
-            mobileMenu.classList.remove('active');
-            body.classList.remove('menu-open');
-        }
+        // Hamburger menu variables
+const hamburger = document.querySelector('.hamburger');
+const mobileMenu = document.querySelector('.mobile-menu');
+const body = document.body;
+
+// Hamburger menu toggle
+hamburger.addEventListener('click', function(e) {
+    e.stopPropagation();
+    this.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    body.classList.toggle('menu-open');
+});
+
+// Close menus when clicking outside
+document.addEventListener('click', function(e) {
+    // Close mobile menu
+    if (!e.target.closest('.navbar') && !e.target.closest('.mobile-menu')) {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        body.classList.remove('menu-open');
+    }
+    
+    // Close cart modal - but exclude clicks on cart items and buttons
+    if (!e.target.closest('.cart-modal') && 
+        !e.target.closest('.cart-icon') &&
+        !e.target.closest('.cart-item') && // Add this line
+        !e.target.closest('.quantity-btn')) { // And this line
+        cartModal.style.display = 'none';
+    }
+});
+
+// Close menu when clicking on links (optional)
+document.querySelectorAll('.mobile-menu a').forEach(link => {
+    link.addEventListener('click', function() {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        body.classList.remove('menu-open');
     });
+});
+
+// Make sure this is at the end of your script
+updateCart();
 
     </script>
 
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-  AOS.init();
-</script>
+
 
 </body>
 </html>
