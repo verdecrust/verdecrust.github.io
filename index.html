@@ -378,31 +378,36 @@
         }
         
         .cart-item {
-            display: grid;
-            grid-template-columns: 1fr auto auto; /* Name | Quantity Controls | Price */
-            align-items: center;
-            gap: 15px;
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-        }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #e0e0e0;
+  font-family: 'Segoe UI', sans-serif;
+}
         
         .cart-item:last-child {
             border-bottom: none;
         }
         
-        .cart-item-name {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 150px;
-        }
+.cart-item-details {
+  flex: 1;
+}
+
+.cart-item-name {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 2px;
+}
+
         
         .cart-item-price {
-            color: #2e8b57;
-            justify-self: end; /* Align price to the right */
-            min-width: 60px; /* Ensure price column has fixed width */
-            text-align: right;
-        }
+  font-weight: bold;
+  color: #28a745;
+  margin-left: 12px;
+  min-width: 70px;
+  text-align: right;
+}
         
         .cart-total {
             text-align: right;
@@ -1276,12 +1281,40 @@ footer */
     margin: 0 5px;   /* Less spacing */
 }
 
-.cart-item-controls {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    justify-self: end; /* Align to the right */
+.cart-item-customizations {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 6px;
 }
+
+.cart-item-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quantity-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 4px 10px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.quantity-btn:hover {
+  background-color: #218838;
+}
+
+.cart-item-quantity {
+  min-width: 24px;
+  text-align: center;
+  font-weight: 600;
+}
+
+
 
 
 /* top deals */
@@ -1387,48 +1420,216 @@ footer */
 }
 
 /* extra custom.. */
-
-.customization-panel {
+/* Customization Modal Styles */
+.customization-modal {
     display: none;
-    margin-top: 10px;
-    padding: 15px;
-    background: #f9f9f9;
-    border-radius: 8px;
-    border: 1px solid #eee;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
-.option {
-    margin-bottom: 8px;
+.customization-modal .modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 25px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.customization-modal h2 {
+    color: #2e8b57;
+    margin-bottom: 15px;
+}
+
+.customization-modal .pizza-info {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.customization-group {
+    margin-bottom: 20px;
+}
+
+.customization-group h4 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.option-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.radio-option, .checkbox-option {
     display: flex;
     align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: #f5f5f5;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
-.option input {
-    margin-right: 10px;
+.radio-option:hover, .checkbox-option:hover {
+    background: #e0e0e0;
+}
+
+.radio-option input, .checkbox-option input {
+    width: auto;
+    margin: 0;
+}
+
+.checkbox-group {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.customization-summary {
+    text-align: right;
+    margin: 20px 0;
+    font-size: 18px;
+    font-weight: bold;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
 }
 
 .confirm-customization {
-    background: #4CAF50;
+    background-color: #2e8b57;
     color: white;
     border: none;
-    padding: 8px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 10px;
+    padding: 12px 25px;
     width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
     font-weight: bold;
+    transition: background-color 0.3s;
 }
 
 .confirm-customization:hover {
-    background: #45a049;
+    background-color: #1f6e45;
 }
 
-/* For cart display */
-.cart-item-extras {
-    font-size: 0.8em;
+.close-customization {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #333;
+}
+
+.close-customization:hover {
+    color: #2e8b57;
+}
+
+.cart-item-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-item-customizations {
+    font-size: 12px;
     color: #666;
     margin-top: 3px;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    /* Customization Modal */
+    .customization-modal .modal-content {
+        width: 95%;
+        margin: 10% auto;
+        padding: 15px;
+    }
+    
+    .option-group {
+        flex-direction: column;
+    }
+    
+    /* Cart Items */
+    .cart-item {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 15px 0;
+    }
+    
+    .cart-item-info {
+        margin-bottom: 10px;
+    }
+    
+    .cart-item-controls {
+        justify-content: center;
+    }
+    
+    .cart-item-price {
+        text-align: center;
+    }
+    
+    /* Customization Options */
+    .customization-group h4 {
+        font-size: 16px;
+    }
+    
+    .radio-option, .checkbox-option {
+        padding: 6px 10px;
+        font-size: 14px;
+    }
+    
+    .confirm-customization {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+    .customization-modal .modal-content {
+        margin: 5% auto;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    
+    .cart-item-name {
+        font-size: 16px;
+    }
+    
+    .cart-item-customizations {
+        font-size: 12px;
+    }
+    
+    .quantity-btn {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+.cart-item-price {
+    font-weight: bold;
+    min-width: 80px;
+    text-align: right;
+}
+
+/* Mobile specific */
+@media (max-width: 768px) {
+    .cart-item-price {
+        text-align: center;
+        margin-top: 8px;
+    }
+}
+
+
 
     </style>
 </head>
@@ -1461,11 +1662,11 @@ footer */
             🛒
             <span class="cart-count">0</span>
         </div>
-        <div class="hamburger" onclick="toggleMobileMenu()">
+        <div class="hamburger">
             <span></span>
             <span></span>
             <span></span>
-        </div>
+</div>
     </div>
     <!-- Mobile Menu Links (initially hidden) -->
 <div class="mobile-menu" >
@@ -1539,25 +1740,11 @@ footer */
                 <h3>Margherita</h3>
                 <p>Classic tomato and mozzarella</p>
                 <div class="price">₹90</div>
-                <button class="add-to-cart" data-name="Margherita" data-price="90">Add to Cart</button>
-            </div>
-            <!-- Customization Options Panel -->
-                <div class="customization-panel">
-        <div class="option">
-            <input type="checkbox" id="cheese-margherita" data-price="30">
-            <label for="cheese-margherita">Extra Cheese (+₹30)</label>
-        </div>
-        <div class="option">
-            <input type="checkbox" id="toppings-margherita" data-price="40">
-            <label for="toppings-margherita">Extra Toppings (+₹40)</label>
-        </div>
-        <div class="option">
-            <input type="checkbox" id="crust-margherita" data-price="50">
-            <label for="crust-margherita">Stuffed Crust (+₹50)</label>
-        </div>
-        <button class="confirm-customization">Add Customized Pizza</button>
-    </div>
+                <button class="add-to-cart" data-name="Margherita" data-price="90">Customize & Add</button>
 
+
+            </div>
+           
 
             <div class="pizza-item">
                 <img src="https://images.unsplash.com/photo-1588315029754-2dd089d39a1a" alt="Pepperoni Pizza">
@@ -1617,6 +1804,110 @@ footer */
         </div>
     </div>
 
+
+<!-- Customization Modal -->
+<div class="customization-modal" id="customizationModal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-customization">&times;</span>
+        <h2>Customize Your Pizza</h2>
+        <div class="pizza-info">
+            <h3 id="customPizzaName"></h3>
+            <p>Base Price: ₹<span id="customPizzaPrice"></span></p>
+        </div>
+        
+        <form id="customizationForm">
+            <!-- Size Options -->
+            <div class="customization-group">
+                <h4>Size</h4>
+                <div class="option-group">
+                    <label class="radio-option">
+                        <input type="radio" name="size" value="Regular" checked data-price="0">
+                        <span>Regular (+₹0)</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="size" value="Medium" data-price="50">
+                        <span>Medium (+₹50)</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="size" value="Large" data-price="100">
+                        <span>Large (+₹100)</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Crust Options -->
+            <div class="customization-group">
+                <h4>Crust</h4>
+                <div class="option-group">
+                    <label class="radio-option">
+                        <input type="radio" name="crust" value="Classic" checked data-price="0">
+                        <span>Classic (+₹0)</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="crust" value="Thin" data-price="20">
+                        <span>Thin Crust (+₹20)</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="crust" value="Cheese Burst" data-price="40">
+                        <span>Cheese Burst (+₹40)</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Extra Toppings -->
+            <div class="customization-group">
+                <h4>Extra Toppings (₹30 each)</h4>
+                <div class="option-group checkbox-group">
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="toppings" value="Extra Cheese" data-price="30">
+                        <span>Extra Cheese</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="toppings" value="Mushrooms" data-price="30">
+                        <span>Mushrooms</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="toppings" value="Olives" data-price="30">
+                        <span>Olives</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="toppings" value="Onions" data-price="30">
+                        <span>Onions</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="toppings" value="Bell Peppers" data-price="30">
+                        <span>Bell Peppers</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Sauces -->
+            <div class="customization-group">
+                <h4>Sauces (₹15 each)</h4>
+                <div class="option-group checkbox-group">
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="sauces" value="Garlic" data-price="15">
+                        <span>Garlic Sauce</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="sauces" value="BBQ" data-price="15">
+                        <span>BBQ Sauce</span>
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" name="sauces" value="Chili" data-price="15">
+                        <span>Chili Sauce</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="customization-summary">
+                <p>Total: ₹<span id="customizationTotal">0</span></p>
+            </div>
+            
+            <button type="submit" class="confirm-customization">Add to Cart</button>
+        </form>
+    </div>
+</div>
 
     
     
@@ -1773,7 +2064,7 @@ footer */
         Whether you’re grabbing a quick bite or sharing with friends, Verde Crust is
         your go-to spot for delicious, wholesome pizza experiences.
       </p>
-      <a href="#menu" class="about-btn">Explore Menu</a>
+      
     </div>
   </div>
 </section>
@@ -2063,7 +2354,6 @@ function resetForm() {
 
 
 
-
 <!-- review section js -->
  <script>
 const track = document.getElementById('reviewTrack');
@@ -2188,7 +2478,7 @@ window.addEventListener('click', function(event) {
         setInterval(autoSlide, 5000);
         
                 // Cart functionality
-
+let cart = [];
 const cartIcon = document.querySelectorAll('.cart-icon');
 const cartCount = document.querySelectorAll('.cart-count');
 const cartModal = document.getElementById('cartModal');
@@ -2200,77 +2490,18 @@ const checkoutModal = document.getElementById('checkoutModal');
 const checkoutForm = document.getElementById('checkoutForm');
 
 // Add to cart functionality
-// Initialize cart from localStorage or empty array
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-// Function to save cart to localStorage
-function saveCartToStorage() {
-    localStorage.setItem('cart', JSON.stringify(cart));
-}
 
-// Modified updateCart function
 function updateCart() {
-    // Count UNIQUE ITEMS (not quantities)
-    const uniqueItemCount = cart.length;
-    
     // Update cart counter
-    cartCount.forEach(count => {
-        count.textContent = uniqueItemCount;
-        count.style.display = uniqueItemCount ? 'flex' : 'none';
-    });
-    
-    // Update cart modal if open
-    if (cartModal.style.display === 'block') {
-        renderCartItems();
-    }
-    
-    // Save to localStorage
-    saveCartToStorage();
-}
-
-// Modified add to cart functionality
-document.querySelectorAll('.add-to-cart').forEach(button => {
-    button.addEventListener('click', function() {
-        const name = this.getAttribute('data-name');
-        const price = parseFloat(this.getAttribute('data-price'));
-        
-        // Check if pizza already exists in cart
-        const existingItem = cart.find(item => item.name === name);
-        
-        if (existingItem) {
-            existingItem.quantity++; // Increase quantity
-        } else {
-            cart.push({ name, price, quantity: 1 }); // Add new pizza
-        }
-        
-        updateCart();
-        
-        // Show feedback
-        this.textContent = 'Added!';
-        setTimeout(() => {
-            this.textContent = 'Add to Cart';
-        }, 1000);
-    });
-});
-
-// Load cart when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    updateCart(); // This will render any saved cart items
-});
-
-// Update cart display
-function updateCart() {
-    // Count UNIQUE ITEMS (not quantities)
     const uniqueItemCount = cart.length;
-    
-    // Update cart counter (shows number of unique items)
     cartCount.forEach(count => {
         count.textContent = uniqueItemCount;
         count.style.display = uniqueItemCount ? 'flex' : 'none';
     });
     
     // Update cart modal if open
-    if (cartModal.style.display === 'block') {
+    if (document.getElementById('cartModal').style.display === 'block') {
         renderCartItems();
     }
 }
@@ -2279,7 +2510,7 @@ function updateCart() {
 function renderCartItems() {
     if (cart.length === 0) {
         cartItemsContainer.innerHTML = '<p class="empty-cart-message">Your cart is empty</p>';
-        cartTotalElement.textContent = '0.00';
+        cartTotalElement.textContent = '₹0.00';
         checkoutBtn.style.display = 'none';
         return;
     }
@@ -2288,19 +2519,37 @@ function renderCartItems() {
     let total = 0;
     
     cart.forEach((item, index) => {
-        const itemTotal = item.price * item.quantity;
-        itemsHTML += `
-            <div class="cart-item">
-                <span class="cart-item-name">${item.name}</span>
-                <div class="cart-item-controls">
-                    <button class="quantity-btn decrease" data-index="${index}">-</button>
-                    <span class="cart-item-quantity">${item.quantity}</span>
-                    <button class="quantity-btn increase" data-index="${index}">+</button>
-                </div>
-                <span class="cart-item-price">₹${itemTotal.toFixed(2)}</span>
-            </div>
-        `;
+        // Ensure price is a valid number
+        const itemPrice = typeof item.price === 'number' ? item.price : 0;
+        const quantity = typeof item.quantity === 'number' ? item.quantity : 1;
+        const itemTotal = itemPrice * quantity;
         total += itemTotal;
+        
+        // Build display text
+        const displayName = item.name || 'Custom Pizza';
+        const sizeText = (item.size && item.size !== 'Regular') ? ` (${item.size})` : '';
+        
+        // Build customizations text
+        let customizationsText = '';
+        if (item.customizations && item.customizations.length > 0) {
+            customizationsText = item.customizations.join(', ');
+        }
+        
+        itemsHTML += `
+  <div class="cart-item">
+    <div class="cart-item-details">
+      <span class="cart-item-name">${item.name}</span>
+      <div class="cart-item-customizations">${item.customizations || ''}</div>
+      <div class="cart-item-controls">
+        <button class="quantity-btn decrease" data-index="${index}">−</button>
+        <span class="cart-item-quantity">${item.quantity}</span>
+        <button class="quantity-btn increase" data-index="${index}">+</button>
+      </div>
+    </div>
+    <span class="cart-item-price">₹${itemTotal.toFixed(2)}</span>
+  </div>
+`;
+
     });
     
     cartItemsContainer.innerHTML = itemsHTML;
@@ -2308,7 +2557,7 @@ function renderCartItems() {
     checkoutBtn.style.display = 'block';
     
     // Add event listeners for quantity buttons
-document.querySelectorAll('.quantity-btn').forEach(btn => {
+    document.querySelectorAll('.quantity-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.stopPropagation();
             const index = parseInt(this.dataset.index);
@@ -2328,21 +2577,32 @@ document.querySelectorAll('.quantity-btn').forEach(btn => {
     });
 }
 
+
+
+
 // Initialize cart on page load
-document.addEventListener('DOMContentLoaded', updateCart);
+document.addEventListener('DOMContentLoaded', function() {
+    // No need to load from localStorage
+    cart = []; // Start with fresh empty cart
+    updateCart();
+});
+
 
 // Cart modal functionality
-cartIcon.forEach(icon => {
-    icon.addEventListener('click', function(e) {
-        e.stopPropagation();
+document.querySelectorAll('.cart-icon').forEach(icon => {
+    icon.addEventListener('click', function() {
         renderCartItems();
-        cartModal.style.display = 'block';
+        document.getElementById('cartModal').style.display = 'block';
     });
 });
 
-closeModal.addEventListener('click', function() {
-    cartModal.style.display = 'none';
+// Close modal
+document.querySelector('.close-modal').addEventListener('click', function() {
+    document.getElementById('cartModal').style.display = 'none';
 });
+
+
+
 
 // Checkout modal functionality
 function openCheckoutModal() {
@@ -2411,6 +2671,7 @@ checkoutForm.addEventListener('submit', function(e) {
     cart = [];
     updateCart();
     checkoutModal.style.display = 'none';
+    cartModal.style.display = 'none';
     this.reset();
 });
 
@@ -2427,48 +2688,212 @@ window.addEventListener('click', function(event) {
 // Initialize cart
 updateCart();
 
-        // Hamburger menu variables
+
+
+// Hamburger menu variables
 const hamburger = document.querySelector('.hamburger');
 const mobileMenu = document.querySelector('.mobile-menu');
 const body = document.body;
 
-// Hamburger menu toggle
-hamburger.addEventListener('click', function(e) {
-    e.stopPropagation();
-    this.classList.toggle('active');
-    mobileMenu.classList.toggle('active');
-    body.classList.toggle('menu-open');
-});
+document.addEventListener('DOMContentLoaded', function () {
+    const hamburger = document.querySelector('.hamburger');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const body = document.body;
 
-// Close menus when clicking outside
-document.addEventListener('click', function(e) {
-    // Close mobile menu
-    if (!e.target.closest('.navbar') && !e.target.closest('.mobile-menu')) {
-        hamburger.classList.remove('active');
-        mobileMenu.classList.remove('active');
-        body.classList.remove('menu-open');
-    }
-    
-    // Close cart modal - but exclude clicks on cart items and buttons
-    if (!e.target.closest('.cart-modal') && 
-        !e.target.closest('.cart-icon') &&
-        !e.target.closest('.cart-item') && // Add this line
-        !e.target.closest('.quantity-btn')) { // And this line
-        cartModal.style.display = 'none';
-    }
-});
+    // Hamburger menu toggle
+    hamburger.addEventListener('click', function (e) {
+        e.stopPropagation();
+        this.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        body.classList.toggle('menu-open');
+    });
 
-// Close menu when clicking on links (optional)
-document.querySelectorAll('.mobile-menu a').forEach(link => {
-    link.addEventListener('click', function() {
-        hamburger.classList.remove('active');
-        mobileMenu.classList.remove('active');
-        body.classList.remove('menu-open');
+    // Close menus when clicking outside
+    document.addEventListener('click', function (e) {
+        if (!e.target.closest('.navbar') && !e.target.closest('.mobile-menu')) {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            body.classList.remove('menu-open');
+        }
+    });
+
+    // Close on nav link click
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+        link.addEventListener('click', function () {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            body.classList.remove('menu-open');
+        });
     });
 });
 
-// Make sure this is at the end of your script
-updateCart();
+
+// Customization functionality
+let currentPizza = null;
+const customizationModal = document.getElementById('customizationModal');
+const closeCustomization = document.querySelector('.close-customization');
+const customPizzaName = document.getElementById('customPizzaName');
+const customPizzaPrice = document.getElementById('customPizzaPrice');
+const customizationTotal = document.getElementById('customizationTotal');
+const customizationForm = document.getElementById('customizationForm');
+
+// Modify the add-to-cart event listeners to open customization modal
+// Modify the add-to-cart event listeners to always open customization modal
+document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', function() {
+        currentPizza = {
+            name: this.dataset.name,
+            basePrice: parseFloat(this.dataset.price),
+            price: parseFloat(this.dataset.price),
+            size: 'Regular',  // Default size
+            crust: 'Classic', // Default crust
+            toppings: [],     // No toppings by default
+            sauces: [],       // No sauces by default
+            customizations: [] // No customizations by default
+        };
+        
+        // Set modal content
+        customPizzaName.textContent = currentPizza.name;
+        customPizzaPrice.textContent = currentPizza.basePrice.toFixed(2);
+        customizationTotal.textContent = currentPizza.basePrice.toFixed(2);
+        
+        // Reset form to defaults
+        customizationForm.reset();
+        document.querySelector('input[name="size"][value="Regular"]').checked = true;
+        document.querySelector('input[name="crust"][value="Classic"]').checked = true;
+        
+        // Show modal
+        customizationModal.style.display = 'block';
+    });
+});
+
+// Close customization modal
+closeCustomization.addEventListener('click', function() {
+    customizationModal.style.display = 'none';
+});
+
+// Calculate total when options change
+customizationForm.addEventListener('change', function() {
+    let total = currentPizza.basePrice;
+    
+    // Add size price
+    const selectedSize = document.querySelector('input[name="size"]:checked');
+    total += parseFloat(selectedSize.dataset.price);
+    
+    // Add crust price
+    const selectedCrust = document.querySelector('input[name="crust"]:checked');
+    total += parseFloat(selectedCrust.dataset.price);
+    
+    // Add toppings price
+    document.querySelectorAll('input[name="toppings"]:checked').forEach(topping => {
+        total += parseFloat(topping.dataset.price);
+    });
+    
+    // Add sauces price
+    document.querySelectorAll('input[name="sauces"]:checked').forEach(sauce => {
+        total += parseFloat(sauce.dataset.price);
+    });
+    
+    // Update total display
+    customizationTotal.textContent = total.toFixed(2);
+    currentPizza.price = total;
+});
+
+// In the customization form submit handler:
+// Update the customization form submission handler
+customizationForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Get selected options with proper price parsing
+    const sizeElement = document.querySelector('input[name="size"]:checked');
+    const crustElement = document.querySelector('input[name="crust"]:checked');
+    
+    const sizePrice = parseFloat(sizeElement.dataset.price) || 0;
+    const crustPrice = parseFloat(crustElement.dataset.price) || 0;
+    
+    // Calculate toppings price
+    let toppingsPrice = 0;
+    const selectedToppings = document.querySelectorAll('input[name="toppings"]:checked');
+    selectedToppings.forEach(topping => {
+        toppingsPrice += parseFloat(topping.dataset.price) || 0;
+    });
+    
+    // Calculate sauces price
+    let saucesPrice = 0;
+    const selectedSauces = document.querySelectorAll('input[name="sauces"]:checked');
+    selectedSauces.forEach(sauce => {
+        saucesPrice += parseFloat(sauce.dataset.price) || 0;
+    });
+    
+    // Calculate total price
+    const totalPrice = currentPizza.basePrice + sizePrice + crustPrice + toppingsPrice + saucesPrice;
+    
+    // Create cart item
+    const cartItem = {
+        name: currentPizza.name,
+        basePrice: currentPizza.basePrice,
+        price: totalPrice,
+        size: sizeElement.value,
+        crust: crustElement.value,
+        toppings: Array.from(selectedToppings).map(t => t.value),
+        sauces: Array.from(selectedSauces).map(s => s.value),
+        quantity: 1,
+        customizations: []
+    };
+    
+    // Build customizations array
+    if (cartItem.size !== 'Regular') cartItem.customizations.push(cartItem.size);
+    if (cartItem.crust !== 'Classic') cartItem.customizations.push(cartItem.crust);
+    cartItem.customizations.push(...cartItem.toppings);
+    cartItem.customizations.push(...cartItem.sauces);
+    
+    // Add to cart with duplicate prevention
+    const existingIndex = cart.findIndex(item => 
+        item.name === cartItem.name &&
+        item.size === cartItem.size &&
+        item.crust === cartItem.crust &&
+        JSON.stringify(item.toppings.sort()) === JSON.stringify(cartItem.toppings.sort()) &&
+        JSON.stringify(item.sauces.sort()) === JSON.stringify(cartItem.sauces.sort())
+    );
+    
+    if (existingIndex >= 0) {
+        cart[existingIndex].quantity++;
+    } else {
+        cart.push(cartItem);
+    }
+    
+    updateCart();
+    customizationModal.style.display = 'none';
+
+
+
+    
+    // Show feedback
+    const originalButton = document.querySelector(`.add-to-cart[data-name="${currentPizza.name}"]`);
+    if (originalButton) {
+        originalButton.textContent = 'Added!';
+        setTimeout(() => {
+            originalButton.textContent = 'Customize & Add';
+        }, 1000);
+    }
+});
+
+
+
+// Close modal when clicking outside
+window.addEventListener('click', function(event) {
+    if (event.target === customizationModal) {
+        customizationModal.style.display = 'none';
+    }
+});
+
+// Update all add-to-cart buttons to say "Customize & Add"
+document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.textContent = 'Customize & Add';
+});
+
+
+
 
     </script>
 
