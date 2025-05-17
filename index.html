@@ -1386,6 +1386,49 @@ footer */
   animation: fadeIn 1.2s ease-in-out;
 }
 
+/* extra custom.. */
+
+.customization-panel {
+    display: none;
+    margin-top: 10px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.option {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.option input {
+    margin-right: 10px;
+}
+
+.confirm-customization {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+    font-weight: bold;
+}
+
+.confirm-customization:hover {
+    background: #45a049;
+}
+
+/* For cart display */
+.cart-item-extras {
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 3px;
+}
 
     </style>
 </head>
@@ -1498,6 +1541,24 @@ footer */
                 <div class="price">₹90</div>
                 <button class="add-to-cart" data-name="Margherita" data-price="90">Add to Cart</button>
             </div>
+            <!-- Customization Options Panel -->
+                <div class="customization-panel">
+        <div class="option">
+            <input type="checkbox" id="cheese-margherita" data-price="30">
+            <label for="cheese-margherita">Extra Cheese (+₹30)</label>
+        </div>
+        <div class="option">
+            <input type="checkbox" id="toppings-margherita" data-price="40">
+            <label for="toppings-margherita">Extra Toppings (+₹40)</label>
+        </div>
+        <div class="option">
+            <input type="checkbox" id="crust-margherita" data-price="50">
+            <label for="crust-margherita">Stuffed Crust (+₹50)</label>
+        </div>
+        <button class="confirm-customization">Add Customized Pizza</button>
+    </div>
+
+
             <div class="pizza-item">
                 <img src="https://images.unsplash.com/photo-1588315029754-2dd089d39a1a" alt="Pepperoni Pizza">
                 <h3>Pepperoni</h3>
@@ -1533,6 +1594,8 @@ footer */
                 <div class="price">₹150</div>
                 <button class="add-to-cart" data-name="Supreme" data-price="150">Add to Cart</button>
             </div>
+            
+
         </div>
     </section>
 
@@ -1780,7 +1843,7 @@ footer */
 
       <div class="info-item">
         <h4>✉️ Email</h4>
-        <p><a href="mailto:contact@verdecrust.in">contact@verdecrust.in</a></p>
+        <p><a href="mailto:verdecrust@gmail.com">verdecrust@gmail.com</a></p>
       </div>
 
       <div class="info-item social">
@@ -2245,23 +2308,28 @@ function renderCartItems() {
     checkoutBtn.style.display = 'block';
     
     // Add event listeners for quantity buttons
-    document.querySelectorAll('.quantity-btn').forEach(btn => {
+document.querySelectorAll('.quantity-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.stopPropagation();
-            const index = parseInt(this.getAttribute('data-index'));
+            const index = parseInt(this.dataset.index);
+            
             if (this.classList.contains('increase')) {
-                cart[index].quantity += 1;
-            } else if (this.classList.contains('decrease')) {
+                cart[index].quantity++;
+            } else {
                 if (cart[index].quantity > 1) {
-                    cart[index].quantity -= 1;
+                    cart[index].quantity--;
                 } else {
                     cart.splice(index, 1);
                 }
             }
-            updateCart(); // This will automatically save to localStorage
+            
+            updateCart();
         });
     });
 }
+
+// Initialize cart on page load
+document.addEventListener('DOMContentLoaded', updateCart);
 
 // Cart modal functionality
 cartIcon.forEach(icon => {
