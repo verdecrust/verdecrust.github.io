@@ -1630,7 +1630,20 @@ footer */
     }
 }
 
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #2e8b57;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 15px;
+}
 
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
     </style>
 </head>
@@ -1797,7 +1810,7 @@ footer */
                 <p class="empty-cart-message">Your cart is empty</p>
             </div>
             <div class="cart-total">
-                Total: ₹<span id="cartTotal">0.00</span>
+                Total: <span id="cartTotal">₹0.00</span>
             </div>
             <button onclick="openCheckoutModal()" class="checkout-btn">Proceed to Checkout</button>
             
@@ -1916,8 +1929,13 @@ footer */
   <!-- Checkout Form Modal -->
 <div class="checkout-modal" id="checkoutModal">
     <div class="modal-content">
+      
         <span class="close-checkout-modal">&times;</span>
         <h2>Checkout</h2>
+        <div id="checkoutMessage" style="display:none; text-align:center; padding:20px;">
+        <p id="checkoutMessageText">Submitting your order...</p>
+        </div>
+
         <form id="checkoutForm">
             <div class="form-group">
                 <label for="name">Full Name</label>
@@ -1982,6 +2000,8 @@ footer */
 
 
 
+
+
 <div class="steps-section">
     <!-- Left Column -->
     <div class="steps-left" data-aos="fade-right">
@@ -2020,21 +2040,21 @@ footer */
     
     <div class="combo-cards">
       <div class="combo-card">
-        <img src="img/pizzaimg4.jpg" alt="Combo 1">
+        <img src="img/pizzaimg8.jpg" alt="Combo 1">
         <h3>Family Feast</h3>
         <p>2 Large Pizzas + 1 Garlic Bread + 1.5L Soft Drink</p>
         <span class="price">₹699</span>
       </div>
 
       <div class="combo-card">
-        <img src="img/pizzaimg4.jpg" alt="Combo 2">
+        <img src="img/pizzaimg7.jpg" alt="Combo 2">
         <h3>Couple’s Delight</h3>
         <p>1 Medium Pizza + 2 Choco Lava Cakes + 2 Drinks</p>
         <span class="price">₹399</span>
       </div>
 
       <div class="combo-card">
-        <img src="img/pizzaimg4.jpg" alt="Combo 3">
+        <img src="img/pizzaimg6.jpg" alt="Combo 3">
         <h3>Student Combo</h3>
         <p>1 Personal Pizza + Fries + Soft Drink</p>
         <span class="price">₹249</span>
@@ -2079,7 +2099,7 @@ footer */
 <div class="review-slider">
   <div class="review-track" id="reviewTrack">
     <div class="review-card">
-      <img src="https://i.pravatar.cc/100?img=1" alt="Customer" />
+      <img src="https://i.pravatar.cc/100?img=2" alt="Customer" />
       <h4>Utkarsh</h4>
       <p>Delicious pizza and great service. Highly recommended!</p>
       <div class="stars">★★★★★</div>
@@ -2554,7 +2574,7 @@ function renderCartItems() {
     });
     
     cartItemsContainer.innerHTML = itemsHTML;
-    cartTotalElement.textContent = total.toFixed(2);
+    cartTotalElement.textContent = '₹' + total.toFixed(2);
     checkoutBtn.style.display = 'block';
     
     // Add event listeners for quantity buttons
@@ -2643,9 +2663,18 @@ deliveryRadios.forEach((radio) => {
 });
 
 // Form submission
-document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+checkoutForm.addEventListener('submit', function(e) {
   e.preventDefault();
-  
+
+  // Show loading message
+  const messageBox = document.getElementById('checkoutMessage');
+  const messageText = document.getElementById('checkoutMessageText');
+  const form = document.getElementById('checkoutForm');
+
+  messageText.textContent = 'Submitting your order...';
+  messageBox.style.display = 'block';
+  form.style.display = 'none';
+
   const formData = {
     name: document.getElementById('name').value,
     email: document.getElementById('email').value,
@@ -2661,49 +2690,46 @@ document.getElementById('checkoutForm').addEventListener('submit', function(e) {
     total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0)
   };
 
-  // Add delivery-specific data
   if (formData.deliveryMethod === 'delivery') {
     formData.address = document.getElementById('address').value;
   } else {
     formData.pickupTime = document.getElementById('pickupTime').value;
   }
 
-  // Use JSONP proxy or deploy as web app
   const scriptUrl = 'https://script.google.com/macros/s/AKfycbyzqH1YIEwl3SRq3138zc3_jaM_VHPOfiLEfCIOGOIViC7SvEsJY9m73dVT3d9LlIv6Dg/exec';
-  
+
   fetch(scriptUrl, {
     method: 'POST',
-    mode: 'no-cors', // Important for Google Apps Script
+    mode: 'no-cors',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(formData)
   })
-  .then(response => {
-    if (!response.ok) throw new Error('Network response was not ok');
-    return response.text();
-  })
-  .then(text => {
-    try {
-      return JSON.parse(text);
-    } catch {
-      return {status: 'success'}; // Google Apps Script sometimes returns plain text
-    }
-  })
-  .then(data => {
-    alert('Order placed successfully!');
+  .then(() => {
+    messageText.textContent = '✅ Thank you for your order!';
     cart = [];
     updateCart();
-    checkoutModal.style.display = 'none';
+
+    setTimeout(() => {
+  checkoutModal.style.display = 'none';
+  cartModal.style.display = 'none'; // ✅ CLOSE CART MODAL TOO
+  form.reset();
+  form.style.display = 'block';
+  messageBox.style.display = 'none';
+}, 3000);
+
   })
-  .catch(error => {
-    console.error('Order submission error:', error);
-    alert('Order submitted! (Note: You may need to refresh to see changes)');
-    cart = [];
-    updateCart();
-    checkoutModal.style.display = 'none';
+  .catch(() => {
+    messageText.textContent = '⚠️ Something went wrong. Please try again.';
+    setTimeout(() => {
+      checkoutModal.style.display = 'none';
+      form.style.display = 'block';
+      messageBox.style.display = 'none';
+    }, 3000);
   });
 });
+
 
 
 
