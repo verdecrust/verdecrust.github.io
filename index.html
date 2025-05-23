@@ -9,12 +9,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
-<!-- Leaflet Maps -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<!-- leaflet routing machine -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
-<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.min.js"></script>
+
 
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -2176,8 +2171,6 @@ footer */
     <span class="close" onclick="closeOrderHistory()">&times;</span>
     <h2><i class="fas fa-history"></i> Your Orders</h2>
     <div id="orderHistoryList" class="order-history-list">
-     <button onclick="openMapModal([28.4056515, 77.8542516])">Track Delivery</button>
-
 
       <div class="empty-state">
         <i class="fas fa-pizza-slice"></i>
@@ -2186,14 +2179,8 @@ footer */
       </div>
     </div>
   </div>
-  <!-- Delivery Tracking Modal -->
-<div id="mapModal" class="modal">
-  <div class="modal-content" style="width: 90%; max-width: 600px;">
-    <span class="close" onclick="document.getElementById('mapModal').style.display='none'">&times;</span>
-    <h2>Delivery Tracking</h2>
-    <div id="map" style="height: 400px; width: 100%; border-radius: 10px;"></div>
-  </div>
-</div>
+ 
+
 
 </div>
 
@@ -3287,36 +3274,6 @@ document.getElementById('checkoutForm').addEventListener('submit', async functio
   if (formData.deliveryMethod === 'delivery') {
     formData.address = document.getElementById('address').value;
 
-    // ✅ Get real-time user geolocation
-try {
-  const position = await new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 10000 });
-  });
-
-  const userLat = position.coords.latitude;
-  const userLng = position.coords.longitude;
-
-  // 🔒 Check if user is near Bulandshahr
-  const withinBulandshahr = (
-    userLat > 28.1 && userLat < 28.9 &&
-    userLng > 77.1 && userLng < 77.13
-  );
-
-  if (!withinBulandshahr) {
-    alert("⚠️ Sorry, we only deliver within Bulandshahr!");
-    return;
-  }
-
-  formData.deliveryLocation = {
-    lat: userLat,
-    lng: userLng
-  };
-
-} catch (geoError) {
-  alert("⚠️ Please allow location access.");
-  return;
-
-}
 
 
   } else {
@@ -3806,11 +3763,8 @@ function showOrderHistory() {
             <h3><i class="fas fa-receipt"></i> ${date}</h3>
             <p>${items}</p>
             <p><strong>Total:</strong> ₹${order.total} | <strong>Status:</strong> <span class="status-${order.status.toLowerCase()}">${order.status}</span></p>
-            ${order.deliveryLocation ? `
-              <button onclick='openMapModal(${order.deliveryLocation.lat}, ${order.deliveryLocation.lng})'>
-
-                <i class="fas fa-map-marker-alt"></i> Track Delivery
-              </button>` : ''}
+           
+              
           `;
           list.appendChild(div);
         });
@@ -3854,40 +3808,7 @@ window.addEventListener('click', function(event) {
 
 
 
-<script>
-function openMapModal(userLat, userLng) {
-  document.getElementById('mapModal').style.display = 'block';
 
-  setTimeout(() => {
-    const map = L.map('map').setView([userLat, userLng], 13);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
-    L.Routing.control({
-      waypoints: [
-        L.latLng(shopLocation.lat, shopLocation.lng),
-        L.latLng(userLat, userLng)
-      ],
-      routeWhileDragging: false,
-      lineOptions: {
-        styles: [{ color: 'green', weight: 4 }]
-      },
-      createMarker: function(i, wp) {
-        return L.marker(wp.latLng, {
-          icon: L.icon({
-            iconUrl: i === 0 ? 'shop-icon.png' : 'user-icon.png',
-            iconSize: [30, 30]
-          })
-        });
-      }
-    }).addTo(map);
-  }, 300);
-}
-
-
-</script>
 
 
 
