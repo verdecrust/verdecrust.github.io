@@ -2094,6 +2094,63 @@ footer */
 
 
 
+.status-tracker-ui {
+  margin-top: 20px;
+  border-left: 3px solid #ccc;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tracker-step {
+  font-weight: 600;
+  padding: 10px 15px;
+  background: #f0f0f0;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.tracker-step.active {
+  background-color: #4caf50;
+  color: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.status-tracker {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.status-tracker .step {
+  padding: 8px 12px;
+  border-radius: 5px;
+  background-color: #eee;
+  color: #555;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-tracker .step.active {
+  background-color: #4caf50;
+  color: white;
+}
+
+.status-tracker .step::before {
+  content: "✔";
+  color: inherit;
+}
+
+.status-tracker .step.active::before {
+  background: #28a745;
+}
+
+
+
     </style>
 </head>
 <body>
@@ -2224,6 +2281,18 @@ footer */
 </div>
 </nav>
 
+
+<!-- Tracking Status Modal -->
+<!-- Delivery Tracking Modal -->
+<div id="trackingModal" class="modal">
+  <div class="modal-content" style="max-width: 400px;">
+    <span class="close" onclick="document.getElementById('trackingModal').style.display='none'">&times;</span>
+    
+    <div id="trackingStatusBox" class="tracking-status-box">
+      <!-- Loaded dynamically -->
+    </div>
+  </div>
+</div>
 
 
 
@@ -3576,6 +3645,7 @@ auth.onAuthStateChanged(user => {
   
   if (user) {
     // User is signed in
+    console.log("✅ Signed in as:", user.email);
     avatar.style.display = 'inline-block';
     signInLink.style.display = 'none';
     
@@ -3592,6 +3662,7 @@ auth.onAuthStateChanged(user => {
     closeAuthModal();
   } else {
     // User is signed out
+    console.log("❌ Not signed in");
     avatar.style.display = 'none';
     signInLink.style.display = 'inline-block';
   }
@@ -3676,26 +3747,70 @@ function registerUser() {
 }
 
 // Google Sign-In
-document.getElementById('googleSignInBtn').addEventListener('click', (e) => {
+// Update your Google Auth provider configuration
+
+
+// Add these custom parameters to force account selection
+provider.setCustomParameters({
+  prompt: 'select_account', // Always show account selector
+  login_hint: '' // Clear any cached email hints
+});
+
+// Modified Google Sign-In function
+document.getElementById('googleSignInBtn').addEventListener('click', async (e) => {
   e.preventDefault();
   const status = document.getElementById('authStatus');
   status.textContent = 'Signing in with Google...';
   
-  auth.signInWithPopup(provider)
-    .then(() => {
-      status.textContent = '✅ Signed in with Google!';
-      setTimeout(closeAuthModal, 1000);
-    })
-    .catch(error => {
-      console.error('Google sign-in error:', error);
+  try {
+    // Set persistence first
+    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+    
+    // Then sign in with popup
+    const result = await auth.signInWithPopup(provider);
+    const user = result.user;
+    
+    // Debug log
+    console.log("Successfully signed in as:", user.email);
+    
+    status.textContent = '✅ Signed in with Google!';
+    setTimeout(closeAuthModal, 1000);
+    
+    // Optional: Create user document in Firestore
+    await db.collection('users').doc(user.uid).set({
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+    }, { merge: true });
+    
+  } catch (error) {
+    console.error('Google sign-in error:', error);
+    
+    // Handle specific errors
+    if (error.code === 'auth/account-exists-with-different-credential') {
+      status.textContent = '❌ This email is already registered with another method.';
+    } else if (error.code === 'auth/popup-closed-by-user') {
+      status.textContent = '❌ Sign in window was closed.';
+    } else {
       status.textContent = `❌ ${error.message}`;
-    });
+    }
+  }
 });
 
 // Logout
 function logout() {
-  auth.signOut();
-  document.getElementById('userDropdown').style.display = 'none';
+  auth.signOut()
+    .then(() => {
+      console.log("User signed out successfully");
+      document.getElementById('userDropdown').style.display = 'none';
+      
+      // Optional: Redirect or refresh page
+      window.location.reload();
+    })
+    .catch(error => {
+      console.error("Sign out error:", error);
+    });
 }
 
 // User Dropdown
@@ -3714,20 +3829,11 @@ function showOrderHistory() {
   const list = document.getElementById('orderHistoryList');
 
   modal.style.display = 'block';
-
-  list.innerHTML = `
-    <div class="empty-state">
-      <i class="fas fa-spinner fa-spin"></i>
-      <p>Loading your orders...</p>
-    </div>
-  `;
+  list.innerHTML = `<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Loading your orders...</p></div>`;
 
   firebase.auth().onAuthStateChanged(user => {
     if (!user) {
-      list.innerHTML = `
-        <div class="empty-state">
-          <p>⚠️ Please sign in to view your orders.</p>
-        </div>`;
+      list.innerHTML = `<div class="empty-state"><p>⚠️ Please sign in to view your orders.</p></div>`;
       return;
     }
 
@@ -3736,8 +3842,6 @@ function showOrderHistory() {
       .orderBy('timestamp', 'desc')
       .onSnapshot(snapshot => {
         list.innerHTML = '';
-
-        
 
         if (snapshot.empty) {
           list.innerHTML = `
@@ -3751,30 +3855,30 @@ function showOrderHistory() {
 
         snapshot.forEach(doc => {
           const order = doc.data();
+          const orderId = doc.id;
           const date = order.timestamp?.toDate().toLocaleString() || 'Unknown date';
-
-          const items = order.items.map(item =>
-            `${item.quantity}× ${item.name} (${item.customizations?.map(c => c.name).join(', ') || 'No customizations'})`
-          ).join('<br>');
+          const items = order.items.map(item => {
+  const customizations = (item.customizations && item.customizations.length > 0)
+    ? item.customizations.map(c => c.name).join(', ')
+    : 'No customizations';
+  return `${item.quantity}× ${item.name} (${customizations})`;
+}).join('<br>');
 
           const div = document.createElement('div');
           div.className = 'order-card';
           div.innerHTML = `
             <h3><i class="fas fa-receipt"></i> ${date}</h3>
             <p>${items}</p>
-            <p><strong>Total:</strong> ₹${order.total} | <strong>Status:</strong> <span class="status-${order.status.toLowerCase()}">${order.status}</span></p>
-           
-              
+            <p><strong>Total:</strong> ₹${order.total}</p>
+            <button onclick="showTrackingModal('${orderId}')"><i class="fas fa-truck"></i> Track Order</button>
           `;
           list.appendChild(div);
         });
-
-      }, error => {
-        console.error('Real-time error:', error);
-        list.innerHTML = `<div class="empty-state"><p>❌ Failed to load orders</p></div>`;
       });
   });
 }
+
+
 
 
 // Helper function to format order items
@@ -3784,6 +3888,49 @@ function formatOrderItems(items) {
     `${item.quantity || 1}× ${item.name || 'Unknown item'}`
   ).join('<br>');
 }
+
+function showTrackingModal(orderId) {
+  const modal = document.getElementById('trackingModal');
+  const box = document.getElementById('trackingStatusBox');
+  modal.style.display = 'block';
+  box.innerHTML = `<p>Loading tracking info...</p>`;
+
+  // Real-time listener
+  firebase.firestore().collection('orders').doc(orderId)
+    .onSnapshot(doc => {
+      if (!doc.exists) {
+        box.innerHTML = `<p>❌ Order not found.</p>`;
+        return;
+      }
+
+      const order = doc.data();
+      const deliveryPerson = order.deliveryPerson || { name: "Not assigned", contact: "-" };
+      const status = order.status || "Placed";
+
+      const stepStatuses = {
+        "Placed": 1,
+        "Confirmed": 2,
+        "Cooking": 3,
+        "Out for Delivery": 4,
+        "Delivered": 5
+      };
+      const currentStep = stepStatuses[status] || 1;
+
+      box.innerHTML = `
+        <h3><i class="fas fa-truck"></i> Delivery Tracking</h3>
+        <p><strong>Delivery Person:</strong> ${deliveryPerson.name}<br>
+        <strong>Contact:</strong> ${deliveryPerson.contact}</p>
+        <div class="status-tracker-ui">
+          <div class="tracker-step ${currentStep >= 1 ? 'active' : ''}">✔ Order Placed</div>
+          <div class="tracker-step ${currentStep >= 2 ? 'active' : ''}">✔ Confirmed</div>
+          <div class="tracker-step ${currentStep >= 3 ? 'active' : ''}">✔ Preparing</div>
+          <div class="tracker-step ${currentStep >= 4 ? 'active' : ''}">✔ Out for Delivery</div>
+          <div class="tracker-step ${currentStep === 5 ? 'active' : ''}">✔ Delivered</div>
+        </div>
+      `;
+    });
+}
+
 
 
 
