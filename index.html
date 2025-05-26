@@ -360,7 +360,7 @@ body.modal-open {
         
         .modal-content {
             background-color: white;
-            margin: 10% auto;
+            margin: 13% auto;
             padding: 20px;
             border-radius: 10px;
             width: 80%;
@@ -2106,7 +2106,7 @@ footer */
 /* sign in link nav */
 
 .sign-in-box {
-  padding: 8px 16px;
+  padding: 4px 11px;
   border: 2px solid #2e7d32; /* Verde green */
   border-radius: 6px;
   color: #2e7d32;
@@ -2239,12 +2239,9 @@ footer */
     </div>
   </div>
  
-
-
 </div>
-
-    <a href="#" onclick="logout()">Sign Out</a>
-  </div>
+  <a href="#" onclick="logout()">Sign Out</a>
+</div>
 </div>
 
 <!-- Sign In Link -->
@@ -4055,7 +4052,7 @@ function showOrderHistory() {
 /* Delivery person info */
 .delivery-person-info {
   background: #f8f9fa;
-  padding: 12px;
+  padding: 8px;
   border-radius: 8px;
   margin-bottom: 20px;
   display: flex;
@@ -4195,6 +4192,18 @@ window.addEventListener('click', function(event) {
     closeTrackingModal();
   }
 });
+
+//close order history
+function closeOrderHistory() {
+  document.getElementById('orderHistoryModal').style.display = 'none';
+}
+window.addEventListener('click', function(event) {
+  const modal = document.getElementById('orderHistoryModal');
+  if (event.target === modal) {
+    modal.style.display = 'none';
+  }
+});
+
 </script>
 
 
