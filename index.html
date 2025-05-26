@@ -33,9 +33,13 @@
         html {
             scroll-behavior: smooth;
         }
+body.modal-open {
+  overflow: hidden;
+}
+
         
         /* Navbar Styles */
-        .navbar {
+.navbar {
   position: fixed;
   top: 0;
   left: 0;
@@ -48,6 +52,7 @@
   align-items: center;
   justify-content: space-between; /* or center if needed */
   padding: 0 20px;
+
 }
         
 .cart-icon {
@@ -102,7 +107,7 @@
     left: -100%;
     width:70%;
     height: 100vh;
-    background-color: #fff;
+    background-color: #e9f6e4;
     padding: 100px 20px;
     display: none;
     flex-direction: column;
@@ -113,6 +118,7 @@
     position: absolute;
     right: 0;
     text-align: center;
+
 
 
 }
@@ -568,21 +574,23 @@
 
 /* ===== Hamburger Menu ===== */
 .hamburger {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 24px;
-    height: 18px;
-    margin-left: 20px;
-    cursor: pointer;
+  width: 30px;
+  height: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  z-index: 1100;
+  transition: 0.3s ease;
 }
 
 .hamburger span {
-    display: block;
-    width: 100%;
-    height: 2px;
-    background-color: #333;
-    transition: all 0.3s ease;
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: #03785f;
+  border-radius: 2px;
+  transition: 0.4s;
 }
 
 
@@ -1168,7 +1176,7 @@ footer */
     /* Show hamburger */
     .hamburger {
        
-        margin-left: 15px;
+        margin-left: 20px;
         order: 2;
     }
     
@@ -1196,15 +1204,15 @@ footer */
 }
 
 .hamburger.active span:nth-child(1) {
-    transform: translateY(8px) rotate(45deg);
+  transform: rotate(45deg) translate(5px, 5px);
 }
 
 .hamburger.active span:nth-child(2) {
-    opacity: 0;
+  opacity: 0;
 }
 
 .hamburger.active span:nth-child(3) {
-    transform: translateY(-8px) rotate(-45deg);
+  transform: rotate(-45deg) translate(5px, -5px);
 }
 
 /* Responsive Styles */
@@ -2094,61 +2102,55 @@ footer */
 
 
 
-.status-tracker-ui {
-  margin-top: 20px;
-  border-left: 3px solid #ccc;
-  padding-left: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
 
-.tracker-step {
+/* sign in link nav */
+
+.sign-in-box {
+  padding: 8px 16px;
+  border: 2px solid #2e7d32; /* Verde green */
+  border-radius: 6px;
+  color: #2e7d32;
+  text-decoration: none;
   font-weight: 600;
-  padding: 10px 15px;
-  background: #f0f0f0;
-  border-radius: 5px;
-  transition: 0.3s;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  font-family: 'Segoe UI', sans-serif;
+  margin-left: 10px;
+  display: inline-block;
 }
 
-.tracker-step.active {
-  background-color: #4caf50;
+.sign-in-box:hover {
+  background-color: transparent;
   color: white;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  background: #2e7d32;
+  box-shadow: 0 0 10px rgba(46, 125, 50, 0.6);
+  transform: scale(1.05);
 }
 
-.status-tracker {
-  margin-top: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+/* save details */
 
-.status-tracker .step {
-  padding: 8px 12px;
+#userInfoModal .modal-content {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 10px;
+}
+#userInfoForm input,
+#userInfoForm textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
   border-radius: 5px;
-  background-color: #eee;
-  color: #555;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  border: 1px solid #ccc;
 }
-
-.status-tracker .step.active {
-  background-color: #4caf50;
+#userInfoForm button {
+  background-color: #2e7d32;
   color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
 }
-
-.status-tracker .step::before {
-  content: "✔";
-  color: inherit;
-}
-
-.status-tracker .step.active::before {
-  background: #28a745;
-}
-
 
 
     </style>
@@ -2246,7 +2248,8 @@ footer */
 </div>
 
 <!-- Sign In Link -->
-<a id="signInLink" href="#" onclick="openAuthModal()">Sign In</a>
+<a href="#" id="signInLink" onclick="openAuthModal()" class="sign-in-box">Sign In</a>
+
 
 <div id="authModal" class="modal">
   <div class="modal-content">
@@ -2404,7 +2407,7 @@ footer */
     </section>
 
     <!-- Cart Modal (hidden by default) -->
-    <div class="cart-modal" id="cartModal">
+    <div class="modal" id="cartModal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
             <h2>Your Cart</h2>
@@ -2415,9 +2418,7 @@ footer */
             <div class="cart-total">
                 Total: <span id="cartTotal">₹0.00</span>
             </div>
-            <button onclick="openCheckoutModal()" class="checkout-btn">Proceed to Checkout</button>
-            
-
+            <button onclick="handleCheckoutStart('delivery')">Proceed to Checkout</button>
         </div>
     </div>
 
@@ -2526,7 +2527,26 @@ footer */
     </div>
 </div>
 
-    
+<!-- save details     -->
+
+
+<!-- User Info Modal (only shown once per user) -->
+<div id="userInfoModal" class="modal">
+  <div class="modal-content" style="max-width: 400px;">
+    <span class="close" onclick="closeUserInfoModal()">&times;</span>
+    <h2>Save Your Info</h2>
+    <form id="userInfoForm">
+      <input type="text" id="userName" placeholder="Full Name" required>
+      <input type="tel" id="userPhone" placeholder="Mobile Number" required>
+      <input type="email" id="userEmail" placeholder="Email" required>
+      <div id="addressGroup" style="display:none;">
+        <textarea id="userAddress" placeholder="Delivery Address" required></textarea>
+      </div>
+      <button type="submit">Save & Continue</button>
+    </form>
+  </div>
+</div>
+
     
 
   <!-- Checkout Form Modal -->
@@ -3138,6 +3158,7 @@ const checkoutBtn = document.querySelector('.checkout-btn');
 const checkoutModal = document.getElementById('checkoutModal');
 const checkoutForm = document.getElementById('checkoutForm');
 
+
 // Add to cart functionality
 
 
@@ -3157,74 +3178,79 @@ function updateCart() {
 
 // Render cart items with quantity controls
 function renderCartItems() {
-    if (cart.length === 0) {
-        cartItemsContainer.innerHTML = '<p class="empty-cart-message">Your cart is empty</p>';
-        cartTotalElement.textContent = '₹0.00';
-        checkoutBtn.style.display = 'none';
-        return;
-    }
-    
-    let itemsHTML = '';
-    let total = 0;
-    
-    cart.forEach((item, index) => {
-        // Ensure price is a valid number
-        const itemPrice = typeof item.price === 'number' ? item.price : 0;
-        const quantity = typeof item.quantity === 'number' ? item.quantity : 1;
-        const itemTotal = itemPrice * quantity;
-        total += itemTotal;
-        
-        // Build display text
-        const displayName = item.name || 'Custom Pizza';
-        const sizeText = (item.size && item.size !== 'Regular') ? ` (${item.size})` : '';
-        
-        // Build customizations text
-        let customizationsText = '';
-        if (item.customizations && item.customizations.length > 0) {
-            customizationsText = item.customizations.join(', ');
-        }
-        
-        itemsHTML += `
-  <div class="cart-item">
-    <div class="cart-item-details">
-      <span class="cart-item-name">${item.name}</span>
-      <div class="cart-item-customizations">${item.customizations || ''}</div>
-      <div class="cart-item-controls">
-        <button class="quantity-btn decrease" data-index="${index}">−</button>
-        <span class="cart-item-quantity">${item.quantity}</span>
-        <button class="quantity-btn increase" data-index="${index}">+</button>
-      </div>
-    </div>
-    <span class="cart-item-price">₹${itemTotal.toFixed(2)}</span>
-  </div>
-`;
+  const cartModal = document.getElementById('cartModal');
+  const container = document.getElementById('cartItems');
+  const cartTotalElement = document.getElementById('cartTotal');
+  const checkoutBtn = document.querySelector('#cartModal button');
 
+  if (!cartModal || !container || !cartTotalElement || !checkoutBtn) {
+    console.error('Cart modal or container missing in HTML!');
+    return;
+  }
+
+  cartModal.style.display = 'block';
+  container.innerHTML = '';
+
+  if (cart.length === 0) {
+    container.innerHTML = '<p class="empty-cart-message">Your cart is empty</p>';
+    cartTotalElement.textContent = '₹0.00';
+    checkoutBtn.style.display = 'none';
+    return;
+  }
+
+  let total = 0;
+
+  cart.forEach((item, index) => {
+    const itemPrice = typeof item.price === 'number' ? item.price : 0;
+    const quantity = typeof item.quantity === 'number' ? item.quantity : 1;
+    const itemTotal = itemPrice * quantity;
+    total += itemTotal;
+
+    const displayName = item.name || 'Custom Pizza';
+    const customizationsText = item.customizations && item.customizations.length > 0
+      ? item.customizations.join(', ')
+      : '';
+
+    const itemHTML = `
+      <div class="cart-item">
+        <div class="cart-item-details">
+          <span class="cart-item-name">${displayName}</span>
+          <div class="cart-item-customizations">${customizationsText}</div>
+          <div class="cart-item-controls">
+            <button class="quantity-btn decrease" data-index="${index}">−</button>
+            <span class="cart-item-quantity">${quantity}</span>
+            <button class="quantity-btn increase" data-index="${index}">+</button>
+          </div>
+        </div>
+        <span class="cart-item-price">₹${itemTotal.toFixed(2)}</span>
+      </div>
+    `;
+
+    container.insertAdjacentHTML('beforeend', itemHTML);
+  });
+
+  cartTotalElement.textContent = '₹' + total.toFixed(2);
+  checkoutBtn.style.display = 'block';
+
+  document.querySelectorAll('.quantity-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const index = parseInt(this.dataset.index);
+
+      if (this.classList.contains('increase')) {
+        cart[index].quantity++;
+      } else {
+        if (cart[index].quantity > 1) {
+          cart[index].quantity--;
+        } else {
+          cart.splice(index, 1);
+        }
+      }
+
+      updateCart();
     });
-    
-    cartItemsContainer.innerHTML = itemsHTML;
-    cartTotalElement.textContent = '₹' + total.toFixed(2);
-    checkoutBtn.style.display = 'block';
-    
-    // Add event listeners for quantity buttons
-    document.querySelectorAll('.quantity-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const index = parseInt(this.dataset.index);
-            
-            if (this.classList.contains('increase')) {
-                cart[index].quantity++;
-            } else {
-                if (cart[index].quantity > 1) {
-                    cart[index].quantity--;
-                } else {
-                    cart.splice(index, 1);
-                }
-            }
-            
-            updateCart();
-        });
-    });
+  });
 }
+
 
 
 
@@ -3669,6 +3695,62 @@ auth.onAuthStateChanged(user => {
 });
 
 
+function openUserInfoModal() {
+  document.getElementById('userInfoModal').style.display = 'block';
+}
+function closeUserInfoModal() {
+  document.getElementById('userInfoModal').style.display = 'none';
+}
+
+// Called before checkout modal opens
+async function handleCheckoutStart(deliveryMethod) {
+  const user = auth.currentUser;
+  if (!user) return alert("⚠️ Please sign in first.");
+
+  const docRef = db.collection('users').doc(user.uid).collection('profile').doc('info');
+  const doc = await docRef.get();
+
+  if (!doc.exists) {
+    openUserInfoModal();
+    document.getElementById('addressGroup').style.display =
+      deliveryMethod === 'delivery' ? 'block' : 'none';
+  } else {
+    // Auto-fill checkout form
+    const info = doc.data();
+    document.getElementById('name').value = info.name;
+    document.getElementById('email').value = info.email;
+    document.getElementById('phone').value = info.phone;
+    if (deliveryMethod === 'delivery') {
+      document.getElementById('address').value = info.address || '';
+    }
+    document.getElementById('checkoutModal').style.display = 'block';
+  }
+}
+
+// Save info on first visit
+document.getElementById('userInfoForm').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  const user = auth.currentUser;
+  if (!user) return;
+
+  const info = {
+    name: document.getElementById('userName').value,
+    phone: document.getElementById('userPhone').value,
+    email: document.getElementById('userEmail').value,
+    address: document.getElementById('userAddress').value || ''
+  };
+
+  await db.collection('users').doc(user.uid).collection('profile').doc('info').set(info);
+  closeUserInfoModal();
+
+  // Prefill checkout form
+  document.getElementById('name').value = info.name;
+  document.getElementById('email').value = info.email;
+  document.getElementById('phone').value = info.phone;
+  document.getElementById('address').value = info.address;
+
+  document.getElementById('checkoutModal').style.display = 'block';
+});
 
 
 
@@ -3880,8 +3962,138 @@ function showOrderHistory() {
 
 
 
+</script>
 
-// Helper function to format order items
+
+<div id="trackingModal" class="modal">
+  <div class="modal-content tracking-box">
+    <span class="close" onclick="closeTrackingModal()">&times;</span>
+    <div id="trackingStatusBox"></div>
+  </div>
+</div>
+
+<style>
+/* Tracking Modal Styles */
+.modal.tracking-modal {
+  background: rgba(0,0,0,0.5);
+}
+
+.tracking-box {
+  max-width: 500px;
+  width: 90%;
+  padding: 25px;
+  border-radius: 12px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Status Tracker UI */
+.status-tracker-ui {
+  margin-top: 20px;
+  position: relative;
+}
+
+.tracker-step {
+  position: relative;
+  padding: 15px 15px 15px 45px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  background: #f8f9fa;
+  color: #666;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.tracker-step:before {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: white;
+}
+
+.tracker-step.active {
+  background: #e3f5ec;
+  color: #2e8b57;
+  font-weight: 600;
+}
+
+.tracker-step.active:before {
+  background: #2e8b57;
+}
+
+/* Step-specific icons */
+.tracker-step:nth-child(1):before { content: "\f291"; } /* shopping-bag */
+.tracker-step:nth-child(2):before { content: "\f058"; } /* check-circle */
+.tracker-step:nth-child(3):before { content: "\f2e7"; } /* utensils */
+.tracker-step:nth-child(4):before { content: "\f21c"; } /* motorcycle */
+.tracker-step:nth-child(5):before { content: "\f015"; } /* home */
+
+/* Connector lines */
+.tracker-step:not(:last-child):after {
+  content: "";
+  position: absolute;
+  left: 26px;
+  top: 39px;
+  bottom: -11px;
+  width: 2px;
+  background: #ddd;
+  z-index: 1;
+}
+
+.tracker-step.active:not(:last-child):after {
+  background: #2e8b57;
+}
+
+/* Delivery person info */
+.delivery-person-info {
+  background: #f8f9fa;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.delivery-person-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.delivery-person-row i {
+  color: #2e8b57;
+  width: 20px;
+  text-align: center;
+}
+
+/* Current step highlight */
+.current-step {
+  animation: pulse 2s infinite;
+  border-left: 4px solid #2e8b57;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+<script>
 function formatOrderItems(items) {
   if (!items || !Array.isArray(items)) return 'No items';
   return items.map(item => 
@@ -3893,64 +4105,97 @@ function showTrackingModal(orderId) {
   const modal = document.getElementById('trackingModal');
   const box = document.getElementById('trackingStatusBox');
   modal.style.display = 'block';
-  box.innerHTML = `<p>Loading tracking info...</p>`;
+  box.innerHTML = `<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading tracking info...</div>`;
 
   // Real-time listener
-  firebase.firestore().collection('orders').doc(orderId)
+  const unsubscribe = firebase.firestore().collection('orders').doc(orderId)
     .onSnapshot(doc => {
       if (!doc.exists) {
-        box.innerHTML = `<p>❌ Order not found.</p>`;
+        box.innerHTML = `<div class="error-message"><i class="fas fa-exclamation-circle"></i> Order not found</div>`;
         return;
       }
 
       const order = doc.data();
-      const deliveryPerson = order.deliveryPerson || { name: "Not assigned", contact: "-" };
-      const status = order.status || "Placed";
-
-      const stepStatuses = {
-        "Placed": 1,
-        "Confirmed": 2,
-        "Cooking": 3,
-        "Out for Delivery": 4,
-        "Delivered": 5
+      const deliveryPerson = order.deliveryPerson || { 
+        name: "Not assigned", 
+        contact: "Will be assigned soon" 
       };
-      const currentStep = stepStatuses[status] || 1;
-
+      
+      const status = order.status || "Placed";
+      const statusTime = order.statusTime || {};
+      
+      const steps = [
+        { id: 1, status: "Placed", icon: "shopping-bag", time: statusTime.placed },
+        { id: 2, status: "Confirmed", icon: "check-circle", time: statusTime.confirmed },
+        { id: 3, status: "Cooking", icon: "utensils", time: statusTime.cooking },
+        { id: 4, status: "Out for Delivery", icon: "motorcycle", time: statusTime.outForDelivery },
+        { id: 5, status: "Delivered", icon: "home", time: statusTime.delivered }
+      ];
+      
+      const currentStepId = steps.find(s => s.status === status)?.id || 1;
+      
+      // Format time
+      const formatTime = (timestamp) => {
+        if (!timestamp) return '';
+        const date = timestamp.toDate();
+        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      };
+      
       box.innerHTML = `
-        <h3><i class="fas fa-truck"></i> Delivery Tracking</h3>
-        <p><strong>Delivery Person:</strong> ${deliveryPerson.name}<br>
-        <strong>Contact:</strong> ${deliveryPerson.contact}</p>
-        <div class="status-tracker-ui">
-          <div class="tracker-step ${currentStep >= 1 ? 'active' : ''}">✔ Order Placed</div>
-          <div class="tracker-step ${currentStep >= 2 ? 'active' : ''}">✔ Confirmed</div>
-          <div class="tracker-step ${currentStep >= 3 ? 'active' : ''}">✔ Preparing</div>
-          <div class="tracker-step ${currentStep >= 4 ? 'active' : ''}">✔ Out for Delivery</div>
-          <div class="tracker-step ${currentStep === 5 ? 'active' : ''}">✔ Delivered</div>
+        <h2><i class="fas fa-truck"></i> Delivery Tracking</h2>
+        
+        <div class="delivery-person-info">
+          <div class="delivery-person-row">
+            <i class="fas fa-user"></i>
+            <div><strong>Delivery Executive:</strong> ${deliveryPerson.name}</div>
+          </div>
+          <div class="delivery-person-row">
+            <i class="fas fa-phone"></i>
+            <div><strong>Contact:</strong> ${deliveryPerson.contact}</div>
+          </div>
         </div>
+        
+        <div class="status-tracker-ui">
+          ${steps.map(step => `
+            <div class="tracker-step ${currentStepId >= step.id ? 'active' : ''} ${currentStepId === step.id ? 'current-step' : ''}">
+              ${step.status}
+              ${step.time ? `<div class="step-time">${formatTime(step.time)}</div>` : ''}
+              ${currentStepId === step.id && step.status === "Out for Delivery" ? 
+                `<div class="step-eta"><i class="fas fa-clock"></i> ETA: 15-20 mins</div>` : ''}
+            </div>
+          `).join('')}
+        </div>
+        
+        ${currentStepId === 5 ? `
+          <div class="delivery-complete">
+            <i class="fas fa-check-circle"></i> Your order has been delivered!
+          </div>
+        ` : ''}
       `;
     });
+
+  // Store unsubscribe function
+  modal.dataset.unsubscribe = unsubscribe;
 }
 
-
-
-
-// Optional: close modal
-function closeOrderHistory() {
-  document.getElementById('orderHistoryModal').style.display = 'none';
+function closeTrackingModal() {
+  const modal = document.getElementById('trackingModal');
+  modal.style.display = 'none';
+  
+  // Unsubscribe from listener
+  if (modal.dataset.unsubscribe) {
+    modal.dataset.unsubscribe();
+    delete modal.dataset.unsubscribe;
+  }
 }
-
-
 
 // Close modal when clicking outside
 window.addEventListener('click', function(event) {
-  if (event.target === document.getElementById('authModal')) {
-    closeAuthModal();
+  if (event.target === document.getElementById('trackingModal')) {
+    closeTrackingModal();
   }
 });
 </script>
-
-
-
 
 
 
