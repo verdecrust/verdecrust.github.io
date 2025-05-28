@@ -230,40 +230,49 @@ body.modal-open {
             line-height: 1.6;
         }
         
-        .cta-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-        
-        .btn {
-            padding: 12px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-        
-        .btn-primary {
-            background-color: #2e8b57;
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background-color: #1f6e45;
-        }
-        
-        .btn-secondary {
-            background-color: transparent;
-            color: #2e8b57;
-            border: 2px solid #2e8b57;
-        }
-        
-        .btn-secondary:hover {
-            background-color: #2e8b57;
-            color: white;
-        }
-        
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 20px;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}
+
+.btn {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  text-align: center;
+  min-width: 140px;
+}
+
+.btn-primary {
+  background-color: #1a7f4d;
+  color: white;
+  border: 2px solid transparent;
+}
+
+.btn-primary:hover {
+  background-color: #166c42;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: white;
+  color: #1a7f4d;
+  border: 2px solid #1a7f4d;
+}
+
+.btn-secondary:hover {
+  background-color: #f0fdf4;
+  transform: translateY(-2px);
+}
+
         /* Footer */
         footer {
             background-color: #333;
@@ -2015,7 +2024,7 @@ footer */
 /* Single Order Card */
 .order-card {
   background-color: #f9f9f9;
-  border-left: 4px solid #4CAF50;
+  border-left: 4px solid #1f8c87;;
   border-radius: 8px;
   padding: 16px 18px;
   margin-bottom: 16px;
@@ -2152,6 +2161,116 @@ footer */
   border-radius: 5px;
 }
 
+.accordion-card {
+  background: white;
+  margin: 12px 0;
+  padding: 14px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+}
+
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.order-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.order-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  color: #333;
+}
+
+.order-time {
+  font-size: 12px;
+  color: #777;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.icon-blue {
+  color: #4a90e2;
+}
+
+.accordion-arrow {
+  transition: transform 0.3s ease;
+}
+
+.accordion-card.open .accordion-arrow {
+  transform: rotate(180deg);
+}
+
+.accordion-body {
+  margin-top: 12px;
+  display: none;
+}
+
+.accordion-card.open .accordion-body {
+  display: block;
+}
+
+.order-badge {
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.order-badge.delivery {
+  background: #e4f0ff;
+  color: #1976d2;
+}
+
+.order-badge.pickup {
+  background: #eafae5;
+  color: #388e3c;
+}
+
+.track-btn {
+  background-color: #1a73e8;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.track-btn i {
+  margin-right: 6px;
+}
+
+.pickup-info {
+  font-size: 14px;
+  margin-top: 8px;
+  background: #f4f6f8;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+
+
 
     </style>
 </head>
@@ -2234,13 +2353,13 @@ footer */
       <div class="empty-state">
         <i class="fas fa-pizza-slice"></i>
         <p>No orders found.</p>
-        <button onclick="location.href='#menuid'">Order Now</button>
+        <button onclick="location.href='#menuid'">  Order Now</button>
       </div>
     </div>
   </div>
  
 </div>
-  <a href="#" onclick="logout()">Sign Out</a>
+  <a href="#" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out</a>
 </div>
 </div>
 
@@ -3587,10 +3706,18 @@ customizationForm.addEventListener('submit', function(e) {
     };
     
     // Build customizations array
-    if (cartItem.size !== 'Regular') cartItem.customizations.push(cartItem.size);
-    if (cartItem.crust !== 'Classic') cartItem.customizations.push(cartItem.crust);
-    cartItem.customizations.push(...cartItem.toppings);
-    cartItem.customizations.push(...cartItem.sauces);
+// Build customizations array
+// Build cleaned customizations
+const cleanedCustomizations = [
+  cartItem.size !== 'Regular' ? cartItem.size : null,
+  cartItem.crust !== 'Classic' ? cartItem.crust : null,
+  ...cartItem.toppings,
+  ...cartItem.sauces
+].filter(c => c && c.trim() !== '');
+
+cartItem.customizations = cleanedCustomizations;
+
+
     
     // Add to cart with duplicate prevention
     const existingIndex = cart.findIndex(item => 
@@ -3935,27 +4062,87 @@ function showOrderHistory() {
         snapshot.forEach(doc => {
           const order = doc.data();
           const orderId = doc.id;
-          const date = order.timestamp?.toDate().toLocaleString() || 'Unknown date';
-          const items = order.items.map(item => {
-  const customizations = (item.customizations && item.customizations.length > 0)
-    ? item.customizations.map(c => c.name).join(', ')
-    : 'No customizations';
-  return `${item.quantity}× ${item.name} (${customizations})`;
+          const dateObj = order.timestamp?.toDate();
+const formattedDate = dateObj 
+  ? `${dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}, ${dateObj.toLocaleDateString([], { day: '2-digit', month: 'short' })}`
+  : 'N/A';
+
+const items = order.items.map(item => {
+  const cleanCustomizations = (item.customizations || [])
+    .map(c => c?.name || c)     // handle object or string
+    .filter(c => c && c.trim()); // remove empty strings/null
+
+  return `${item.quantity}× ${item.name} (${cleanCustomizations.length ? cleanCustomizations.join(', ') : 'No customizations'})`;
 }).join('<br>');
+
+
+
 
           const div = document.createElement('div');
           div.className = 'order-card';
-          div.innerHTML = `
-            <h3><i class="fas fa-receipt"></i> ${date}</h3>
-            <p>${items}</p>
-            <p><strong>Total:</strong> ₹${order.total}</p>
-            <button onclick="showTrackingModal('${orderId}')"><i class="fas fa-truck"></i> Track Order</button>
-          `;
+          const methodBadge = `
+  <span class="order-badge ${order.deliveryMethod === 'delivery' ? 'delivery' : 'pickup'}">
+    ${order.deliveryMethod === 'delivery' ? 'Delivery' : 'Pickup'}
+  </span>`;
+
+const shortOrderId = orderId.slice(-6).toUpperCase(); // Last 6 chars, uppercase
+
+div.innerHTML = `
+  <div class="accordion-card">
+    <div class="accordion-header" onclick="toggleAccordion(this)">
+      <div class="header-content">
+        <div class="order-info">
+          <div class="order-label">
+            <i class="fa-light fa-box fa-bounce" style="color: #74C0FC;"></i>
+            <span>Order:</span>
+            <strong>#${shortOrderId}</strong>
+          </div>
+          <div class="order-time">
+            <i class="far fa-clock"></i>
+            ${formattedDate}
+          </div>
+        </div>
+        <span class="order-badge ${order.deliveryMethod === 'delivery' ? 'delivery' : 'pickup'}">
+          ${order.deliveryMethod === 'delivery' ? 'Delivery' : 'Pickup'}
+        </span>
+      </div>
+      <i class="fas fa-chevron-down accordion-arrow"></i>
+    </div>
+    <div class="accordion-body">
+      <p>${items}</p>
+      <p><strong>Total:</strong> ₹${order.total}</p>
+      ${
+        order.deliveryMethod === 'delivery'
+          ? `<button onclick="showTrackingModal('${orderId}')" class="track-btn"><i class="fas fa-map-marker-alt"></i> Track Order</button>`
+          : `<div class="pickup-info"><strong>Pickup Time:</strong> ${order.pickupTime || 'N/A'}</div>`
+      }
+    </div>
+  </div>
+`;
+
+
+
+
           list.appendChild(div);
         });
       });
   });
 }
+
+
+function toggleAccordion(header) {
+    const card = header.closest('.accordion-card');
+
+    // Collapse all other cards
+    document.querySelectorAll('.accordion-card').forEach(el => {
+      if (el !== card) {
+        el.classList.remove('open');
+      }
+    });
+
+    // Toggle the clicked one
+    card.classList.toggle('open');
+  }
 
 
 
@@ -4203,6 +4390,25 @@ window.addEventListener('click', function(event) {
     modal.style.display = 'none';
   }
 });
+
+
+  // Toggle dropdown when avatar is clicked
+  function toggleUserMenu() {
+    const dropdown = document.getElementById('userDropdown');
+    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+  }
+
+  // Close dropdown when clicking outside
+  window.addEventListener('click', function (e) {
+    const dropdown = document.getElementById('userDropdown');
+    const avatar = document.getElementById('userAvatar');
+
+    // If the click is outside the dropdown and the avatar
+    if (!dropdown.contains(e.target) && e.target !== avatar) {
+      dropdown.style.display = 'none';
+    }
+  });
+
 
 </script>
 
